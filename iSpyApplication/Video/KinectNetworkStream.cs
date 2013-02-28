@@ -11,6 +11,7 @@ using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using ReasonToFinishPlaying = AForge.Video.ReasonToFinishPlaying;
 using iSpy.Common.Audio;
+using iSpy.Common;
 
 namespace iSpyApplication.Video
 {

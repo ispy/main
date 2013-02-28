@@ -424,7 +424,6 @@
       <DependentUpon>PTZTool.cs</DependentUpon>
     </Compile>
     <Compile Include="Video\AlertEvents.cs" />
-    <Compile Include="Video\ByteArrayUtils.cs" />
     <Compile Include="Video\JPEGStream2.cs" />
     <Compile Include="Video\KinectNetworkStream.cs" />
     <Compile Include="Video\KinectStream.cs" />
@@ -499,7 +498,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ByteArrayUtils.cs" />
     <Compile Include="C2BPProcessor.cs" />
     <Compile Include="Controls\Camera.cs" />
     <Compile Include="AddCamera.cs">

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Net;
 using AForge.Video;
+using iSpy.Common;
 
 namespace iSpyApplication.Video
 {
