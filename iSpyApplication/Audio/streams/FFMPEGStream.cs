@@ -4,6 +4,7 @@ using System.Threading;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using AudioFileReader = AForge.Video.FFMPEG.AudioFileReader;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Audio.streams
 {

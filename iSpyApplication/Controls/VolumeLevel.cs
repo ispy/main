@@ -18,8 +18,9 @@ using iSpyApplication.Video;
 using NAudio.Wave;
 using AForge.Video.FFMPEG;
 using PictureBox = AForge.Controls.PictureBox;
-using ReasonToFinishPlaying = iSpyApplication.Audio.ReasonToFinishPlaying;
+using ReasonToFinishPlaying = iSpy.Common.Audio.ReasonToFinishPlaying;
 using WaveFormat = NAudio.Wave.WaveFormat;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Controls
 {

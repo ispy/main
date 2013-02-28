@@ -3439,7 +3439,7 @@ namespace iSpyApplication
             
         }
 
-        void _talkSource_AudioSourceError(object sender, Audio.AudioSourceErrorEventArgs eventArgs)
+        void _talkSource_AudioSourceError(object sender, iSpy.Common.Audio.AudioSourceErrorEventArgs eventArgs)
         {
             LogErrorToFile(eventArgs.Description);
         }

@@ -10,6 +10,7 @@ using iSpyApplication.Audio.streams;
 using Microsoft.Kinect;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Video
 {

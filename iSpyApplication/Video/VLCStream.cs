@@ -13,6 +13,7 @@ using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NewFrameEventHandler = AForge.Video.NewFrameEventHandler;
 using ReasonToFinishPlaying = AForge.Video.ReasonToFinishPlaying;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Video
 {
@@ -377,7 +378,7 @@ namespace iSpyApplication.Video
             if (PlayingFinished != null)
                 PlayingFinished(sender, ReasonToFinishPlaying.StoppedByUser);
             if (AudioFinished != null)
-                AudioFinished(sender, Audio.ReasonToFinishPlaying.StoppedByUser);
+                AudioFinished(sender, iSpy.Common.Audio.ReasonToFinishPlaying.StoppedByUser);
         }
 
         private void DisposePlayer()

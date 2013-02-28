@@ -1,6 +1,7 @@
 ﻿using System;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Audio.streams
 {

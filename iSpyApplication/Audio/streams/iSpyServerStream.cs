@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Audio.streams
 {
