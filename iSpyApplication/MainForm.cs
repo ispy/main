@@ -25,6 +25,7 @@ using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using PictureBox = AForge.Controls.PictureBox;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using Timer = System.Timers.Timer;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication
 {
