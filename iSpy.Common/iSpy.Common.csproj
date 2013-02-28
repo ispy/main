@@ -80,6 +80,7 @@
     <Compile Include="Audio\IAudioSource.cs" />
     <Compile Include="ByteArrayUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video\AlertEvents.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

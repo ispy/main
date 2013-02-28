@@ -423,7 +423,6 @@
     <Compile Include="PTZTool.Designer.cs">
       <DependentUpon>PTZTool.cs</DependentUpon>
     </Compile>
-    <Compile Include="Video\AlertEvents.cs" />
     <Compile Include="Video\JPEGStream2.cs" />
     <Compile Include="Video\KinectNetworkStream.cs" />
     <Compile Include="Video\KinectStream.cs" />
