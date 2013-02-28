@@ -309,7 +309,6 @@
     <Compile Include="Audio\streams\iSpyServerStream.cs" />
     <Compile Include="Audio\streams\TalkHelperStream.cs" />
     <Compile Include="Audio\streams\VLCStream.cs" />
-    <Compile Include="Audio\streams\IAudioSource.cs" />
     <Compile Include="Audio\streams\LocalDeviceStream.cs" />
     <Compile Include="CameraMicSource.cs">
       <SubType>Form</SubType>
