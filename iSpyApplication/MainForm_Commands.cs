@@ -137,7 +137,7 @@ namespace iSpyApplication
 
         private void ShowRemoteCommands()
         {
-            var ma = new RemoteCommands { Owner = this };
+            var ma = new RemoteCommandsForm { Owner = this };
             ma.ShowDialog(this);
             ma.Dispose();
             LoadCommands();
