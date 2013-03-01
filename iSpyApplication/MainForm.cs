@@ -93,7 +93,7 @@ namespace iSpyApplication
         }
 
         internal static LocalServer MWS;
-        internal Player _player;
+        internal PlayerForm _player;
 
         private static string PurchaseLink = "http://www.ispyconnect.com/astore.aspx";
         private static int _storageCounter;
@@ -102,11 +102,11 @@ namespace iSpyApplication
         private static bool _logging;
         private static string _counters = "";
         private static readonly Random Random = new Random();
-        private static ViewController _vc;
+        private static ViewControllerForm _vc;
         private static int _pingCounter;
         private static ImageCodecInfo _encoder;
         private static readonly StringBuilder LogFile = new StringBuilder(100000);
-        private PTZTool _ptzTool;
+        private PTZControllerForm _ptzTool;
         private static readonly string LogTemplate =
             "<html><head><title>iSpy v<!--VERSION--> Log File</title><style type=\"text/css\">body,td,th,div {font-family:Verdana;font-size:10px}</style></head><body><h1>Log Start (v<!--VERSION-->): " +
             DateTime.Now.ToLongDateString() +
@@ -495,7 +495,7 @@ namespace iSpyApplication
         {
             if (_player == null)
             {
-                _player = new Player();
+                _player = new PlayerForm();
                 _player.Show(this);
                 _player.Closed += PlayerClosed;
             }
@@ -1490,7 +1490,7 @@ namespace iSpyApplication
                 var verLatest = new Version(version);
                 if (verThis < verLatest)
                 {
-                    var nv = new NewVersion();
+                    var nv = new NewVersionForm();
                     nv.ShowDialog(this);
                     nv.Dispose();
                 }
@@ -1530,7 +1530,7 @@ namespace iSpyApplication
 
         private void MenuItem11Click(object sender, EventArgs e)
         {
-            using (var fb = new Feedback())
+            using (var fb = new FeedbackForm())
             {
                 fb.ShowDialog(this);
             }
@@ -1572,7 +1572,7 @@ namespace iSpyApplication
             {
                 if (Conf.Enable_Password_Protect)
                 {
-                    using (var cp = new CheckPassword())
+                    using (var cp = new CheckPasswordForm())
                     {
                         cp.ShowDialog(this);
                         if (cp.DialogResult == DialogResult.OK)
@@ -1986,7 +1986,7 @@ namespace iSpyApplication
 
         private void ShowUnlock()
         {
-            var cp = new CheckPassword();
+            var cp = new CheckPasswordForm();
             cp.ShowDialog(this);
             if (cp.DialogResult == DialogResult.OK)
             {
@@ -2332,7 +2332,7 @@ namespace iSpyApplication
                         LogMessageToFile(LocRm.GetString("WebsiteDown"));
                     return;
                 }
-                var ws = new Webservices();
+                var ws = new WebservicesForm();
                 ws.ShowDialog(this);
                 if (ws.EmailAddress != "")
                     EmailAddress = ws.EmailAddress;
@@ -2579,7 +2579,7 @@ namespace iSpyApplication
             int x = p.Location.X;
             int y = p.Location.Y;
 
-            var le = new LayoutEditor {X = x, Y = y, W = w, H = h};
+            var le = new LayoutEditorForm {X = x, Y = y, W = w, H = h};
 
 
             if (le.ShowDialog(this) == DialogResult.OK)
@@ -2679,7 +2679,7 @@ namespace iSpyApplication
 
         private void WebConnect()
         {
-            var ws = new Webservices();
+            var ws = new WebservicesForm();
             ws.ShowDialog(this);
             if (ws.EmailAddress != "")
             {
@@ -2861,7 +2861,7 @@ namespace iSpyApplication
 
         private void ShowGettingStarted()
         {
-            var gs = new GettingStarted();
+            var gs = new GettingStartedForm();
             gs.Closed += _gs_Closed;
             gs.Show(this);
             gs.Activate();
@@ -2869,7 +2869,7 @@ namespace iSpyApplication
 
         private void _gs_Closed(object sender, EventArgs e)
         {
-            if (((GettingStarted) sender).LangChanged)
+            if (((GettingStartedForm) sender).LangChanged)
             {
                 RenderResources();
                 LoadCommands();
@@ -3209,7 +3209,7 @@ namespace iSpyApplication
         {
             if (_vc == null)
             {
-                _vc = new ViewController(_pnlCameras);
+                _vc = new ViewControllerForm(_pnlCameras);
                 if (_pnlCameras.Height > 0)
                 {
                     double ar = Convert.ToDouble(_pnlCameras.Height)/Convert.ToDouble(_pnlCameras.Width);
@@ -3356,7 +3356,7 @@ namespace iSpyApplication
             }
             else
             {
-                _ptzTool = new PTZTool { Owner = this };
+                _ptzTool = new PTZControllerForm { Owner = this };
                 _ptzTool.Show(this);
                 _ptzTool.Closing += _ptzTool_Closing;
                 _ptzTool.CameraControl = null;
