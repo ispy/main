@@ -1064,7 +1064,7 @@ namespace iSpyApplication
 
             if (cw == null) return;
             TopMost = false;
-            var ac = new AddCamera { CameraControl = cw };
+            var ac = new AddCameraForm { CameraControl = cw };
             ac.ShowDialog(this);
             ac.Dispose();
             TopMost = Conf.AlwaysOnTop;
@@ -1089,7 +1089,7 @@ namespace iSpyApplication
             if (vlf != null)
             {
                 TopMost = false;
-                var am = new AddMicrophone { VolumeLevel = vlf };
+                var am = new AddMicrophoneForm { VolumeLevel = vlf };
                 am.ShowDialog(this);
                 am.Dispose();
                 TopMost = Conf.AlwaysOnTop;
@@ -1112,7 +1112,7 @@ namespace iSpyApplication
 
             if (fpc != null)
             {
-                var afp = new AddFloorPlan { Fpc = fpc, Owner = this };
+                var afp = new AddFloorPlanForm { Fpc = fpc, Owner = this };
                 afp.ShowDialog(this);
                 afp.Dispose();
                 fpc.Invalidate();
@@ -1319,7 +1319,7 @@ namespace iSpyApplication
         {
             CameraWindow cw = NewCameraWindow(videoSourceIndex);
             TopMost = false;
-            var ac = new AddCamera { CameraControl = cw, StartWizard = startWizard, IsNew = true };
+            var ac = new AddCameraForm { CameraControl = cw, StartWizard = startWizard, IsNew = true };
             ac.ShowDialog(this);
             if (ac.DialogResult == DialogResult.OK)
             {
@@ -1506,7 +1506,7 @@ namespace iSpyApplication
         {
             VolumeLevel vl = NewVolumeLevel(audioSourceIndex);
             TopMost = false;
-            var am = new AddMicrophone { VolumeLevel = vl };
+            var am = new AddMicrophoneForm { VolumeLevel = vl };
             am.ShowDialog(this);
 
             int micid = -1;
@@ -1668,7 +1668,7 @@ namespace iSpyApplication
             fpc.BringToFront();
             fpc.Tag = GetControlIndex();
 
-            var afp = new AddFloorPlan { Fpc = fpc, Owner = this };
+            var afp = new AddFloorPlanForm { Fpc = fpc, Owner = this };
             afp.ShowDialog(this);
             if (afp.DialogResult == DialogResult.OK)
             {
