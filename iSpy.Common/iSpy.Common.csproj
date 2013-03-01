@@ -68,7 +68,9 @@
       <HintPath>..\iSpyApplication\DLLS\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.AddIn" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,6 +78,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddIns\IVideoSourceSettingsView.cs" />
+    <Compile Include="AddIns\VideoSourceHost.cs" />
     <Compile Include="Audio\AudioEvents.cs" />
     <Compile Include="Audio\IAudioSource.cs" />
     <Compile Include="ByteArrayUtils.cs" />
