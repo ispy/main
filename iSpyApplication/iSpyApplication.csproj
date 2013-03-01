@@ -1151,6 +1151,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>call "$(SolutionDir)signing\iSpyApplication.bat"</PostBuildEvent>
+    <!--<PostBuildEvent>call "$(SolutionDir)signing\iSpyApplication.bat"</PostBuildEvent>-->
   </PropertyGroup>
 </Project>
