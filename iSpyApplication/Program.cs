@@ -44,7 +44,7 @@ internal static class Program
    
     public static Mutex WriterMutex;
     private static int _reportedExceptionCount;
-    private static ErrorReporting _er;
+    private static ErrorReportingForm _er;
 
     /// <summary>
     /// The main entry point for the application.
@@ -291,7 +291,7 @@ internal static class Program
                 {
                     if (_er == null)
                     {
-                        _er = new ErrorReporting {UnhandledException = e.Exception};
+                        _er = new ErrorReportingForm {UnhandledException = e.Exception};
                         _er.ShowDialog();
                         _er.Dispose();
                         _er = null;

@@ -222,7 +222,7 @@ namespace iSpyApplication.Controls
                 {
                     var io = row * Cols + col;
                     var cgv = _controls[io];
-                    var gvc = new GridViewCamera();
+                    var gvc = new GridViewCameraForm();
                     if (cgv!=null)
                     {
                         gvc.Delay = cgv.Delay;
