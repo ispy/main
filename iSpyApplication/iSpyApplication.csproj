@@ -346,7 +346,6 @@
     <Compile Include="Controls\AreaSelector.Designer.cs">
       <DependentUpon>AreaSelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="Audio\AudioEvents.cs" />
     <Compile Include="Audio\CodecList.cs" />
     <Compile Include="Audio\codecs\AcmChatCodec.cs" />
     <Compile Include="Audio\codecs\ALawChatCodec.cs" />
@@ -370,7 +369,6 @@
     <Compile Include="Audio\streams\iSpyServerStream.cs" />
     <Compile Include="Audio\streams\TalkHelperStream.cs" />
     <Compile Include="Audio\streams\VLCStream.cs" />
-    <Compile Include="Audio\streams\IAudioSource.cs" />
     <Compile Include="Audio\streams\LocalDeviceStream.cs" />
     <Compile Include="Controls\ClipboardTextBox.cs">
       <SubType>Component</SubType>
@@ -534,8 +532,6 @@
     <Compile Include="ShareCamera.Designer.cs">
       <DependentUpon>ShareCamera.cs</DependentUpon>
     </Compile>
-    <Compile Include="Video\AlertEvents.cs" />
-    <Compile Include="Video\ByteArrayUtils.cs" />
     <Compile Include="Video\JPEGStream2.cs" />
     <Compile Include="Video\KinectNetworkStream.cs" />
     <Compile Include="Video\KinectStream.cs" />
@@ -580,7 +576,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ByteArrayUtils.cs" />
     <Compile Include="C2BPProcessor.cs" />
     <Compile Include="Controls\Camera.cs" />
     <Compile Include="Controls\CameraWindow.cs">
@@ -1151,6 +1146,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\iSpy.Common\iSpy.Common.csproj">
+      <Project>{9F8A0E31-F2BD-4990-9DE8-16FB2CACD9AF}</Project>
+      <Name>iSpy.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Video.DirectShow\Video.DirectShow.csproj">
       <Project>{26CD2CE7-FF63-4669-83B0-7D9C8F3408EE}</Project>
       <Name>Video.DirectShow</Name>
