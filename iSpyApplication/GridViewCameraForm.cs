@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 namespace iSpyApplication
 {
-    public partial class GridViewCamera : Form
+    public partial class GridViewCameraForm : Form
     {
         public int Delay = 4;
         public List<int> SelectedIDs;
 
-        public GridViewCamera()
+        public GridViewCameraForm()
         {
             InitializeComponent();
         }

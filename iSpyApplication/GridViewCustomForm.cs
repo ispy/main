@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace iSpyApplication
 {
-    public partial class GridViewCustom : Form
+    public partial class GridViewCustomForm : Form
     {
         public int Cols;
         public int Rows;
-        public GridViewCustom()
+        public GridViewCustomForm()
         {
             InitializeComponent();
         }

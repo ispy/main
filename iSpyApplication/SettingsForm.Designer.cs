@@ -1,6 +1,6 @@
 namespace iSpyApplication
 {
-    partial class Settings
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace iSpyApplication
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.btnBrowseVideo = new System.Windows.Forms.Button();
             this.txtMediaDirectory = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();

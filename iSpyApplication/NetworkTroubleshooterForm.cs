@@ -8,9 +8,12 @@ using Moah;
 
 namespace iSpyApplication
 {
+
     public partial class NetworkTroubleshooterForm : Form
     {
-        private string NL = Environment.NewLine;
+
+        private readonly string NL = Environment.NewLine;
+
         public NetworkTroubleshooterForm()
         {
             InitializeComponent();
@@ -269,10 +272,6 @@ namespace iSpyApplication
                                 MainForm.Conf.ServerPort + " to internal (LAN) port " +
                                 MainForm.Conf.LANPort + " on IP address " + MainForm.AddressIPv4 +
                                 NL);
-                            UISync.Execute(
-                                () =>
-                                rtbOutput.Text +=
-                                "Check http://www.ispyconnect.com/userguide-connecting.aspx#6 for troubleshooting.");
                             if (portMapOk)
                             {
                                 UISync.Execute(
@@ -284,7 +283,8 @@ namespace iSpyApplication
                                     " or check if your antivirus protection (eset, zonealarm etc) is blocking iSpy. ");
                             }
                         }
-                        UISync.Execute(() => rtbOutput.Text += NL + NL + "If you still cannot get it working, please see the troubleshooting section here: http://www.ispyconnect.com/userguide-remote-access-troubleshooting.aspx");
+
+                        UISync.Execute(() => rtbOutput.Text += NL + NL + "Please see the troubleshooting section here: http://www.ispyconnect.com/userguide-remote-access-troubleshooting.aspx");
                     }
                     else
                     {

@@ -18,7 +18,7 @@ using Encoder = System.Drawing.Imaging.Encoder;
 
 namespace iSpyApplication
 {
-    public partial class Settings : Form
+    public partial class SettingsForm : Form
     {
         private const int Rgbmax = 255;
         public int InitialTab;
@@ -26,7 +26,7 @@ namespace iSpyApplication
         readonly string _noDevices = LocRm.GetString("NoAudioDevices");
         private RegistryKey _rkApp;
 
-        public Settings()
+        public SettingsForm()
         {
             InitializeComponent();
             RenderResources();

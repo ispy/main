@@ -1,6 +1,6 @@
 ﻿namespace iSpyApplication
 {
-    partial class GridViewCamera
+    partial class GridViewCameraForm
     {
         /// <summary>
         /// Required designer variable.
