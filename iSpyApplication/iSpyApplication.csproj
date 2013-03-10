@@ -453,6 +453,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LayoutItem.cs" />
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm_Commands.cs">
       <SubType>Form</SubType>
     </Compile>
