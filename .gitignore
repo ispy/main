@@ -148,4 +148,5 @@ $RECYCLE.BIN/
 .DS_Store 
 
 # iSpy specific ignores, this will ignore updates unless specifically added by "git add signing/*"
-signing\* 
+signing/* 
+packages/ 
