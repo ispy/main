@@ -346,7 +346,6 @@
     <Compile Include="Controls\AreaSelector.Designer.cs">
       <DependentUpon>AreaSelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="Audio\AudioEvents.cs" />
     <Compile Include="Audio\CodecList.cs" />
     <Compile Include="Audio\codecs\AcmChatCodec.cs" />
     <Compile Include="Audio\codecs\ALawChatCodec.cs" />
@@ -370,7 +369,6 @@
     <Compile Include="Audio\streams\iSpyServerStream.cs" />
     <Compile Include="Audio\streams\TalkHelperStream.cs" />
     <Compile Include="Audio\streams\VLCStream.cs" />
-    <Compile Include="Audio\streams\IAudioSource.cs" />
     <Compile Include="Audio\streams\LocalDeviceStream.cs" />
     <Compile Include="Controls\ClipboardTextBox.cs">
       <SubType>Component</SubType>
@@ -537,8 +535,6 @@
     <Compile Include="ShareCamera.Designer.cs">
       <DependentUpon>ShareCamera.cs</DependentUpon>
     </Compile>
-    <Compile Include="Video\AlertEvents.cs" />
-    <Compile Include="Video\ByteArrayUtils.cs" />
     <Compile Include="Video\JPEGStream2.cs" />
     <Compile Include="Video\KinectNetworkStream.cs" />
     <Compile Include="Video\KinectStream.cs" />
@@ -583,7 +579,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ByteArrayUtils.cs" />
     <Compile Include="C2BPProcessor.cs" />
     <Compile Include="Controls\Camera.cs" />
     <Compile Include="Controls\CameraWindow.cs">
