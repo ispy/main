@@ -26,6 +26,7 @@ using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using PictureBox = AForge.Controls.PictureBox;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using Timer = System.Timers.Timer;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication
 {
@@ -3364,7 +3365,7 @@ namespace iSpyApplication
             
         }
 
-        void _talkSource_AudioSourceError(object sender, Audio.AudioSourceErrorEventArgs eventArgs)
+        void _talkSource_AudioSourceError(object sender, iSpy.Common.Audio.AudioSourceErrorEventArgs eventArgs)
         {
             LogErrorToFile(eventArgs.Description);
         }

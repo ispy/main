@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.Sockets;
 using iSpyApplication.Audio.streams;
 using NAudio.Wave;
+using iSpy.Common.Audio;
 
 
 namespace iSpyApplication.Audio.talk

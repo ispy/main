@@ -12,6 +12,7 @@ using Microsoft.Kinect;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using iSpyApplication.Kinect;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Video
 {

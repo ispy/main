@@ -6,6 +6,7 @@ using System.Threading;
 using AForge.Video.FFMPEG;
 using iSpyApplication.Audio.streams;
 using NAudio.Wave;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Audio.talk
 {

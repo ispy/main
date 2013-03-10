@@ -10,6 +10,9 @@ using iSpyApplication.Audio.streams;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using ReasonToFinishPlaying = AForge.Video.ReasonToFinishPlaying;
+using iSpy.Common.Audio;
+using iSpy.Common;
+using iSpy.Common.Video;
 
 namespace iSpyApplication.Video
 {
@@ -101,7 +104,7 @@ namespace iSpyApplication.Video
         #endregion
 
         #region Alerts Stuff
-        public event AlertEventHandler AlertHandler;
+        public event iSpy.Common.Video.AlertEventHandler AlertHandler;
         #endregion
 
         /// <summary>

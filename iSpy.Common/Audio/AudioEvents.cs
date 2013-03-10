@@ -1,10 +1,9 @@
-﻿using iSpyApplication.Audio.streams;
+﻿using System;
 
-namespace iSpyApplication.Audio
+namespace iSpy.Common.Audio
 {
-    using System;
 
-    /// <summary>
+	/// <summary>
     /// Delegate for new frame event handler.
     /// </summary>
     /// 

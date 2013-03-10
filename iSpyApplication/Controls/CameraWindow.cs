@@ -22,6 +22,7 @@ using iSpyApplication.Video;
 using xiApi.NET;
 using Encoder = System.Drawing.Imaging.Encoder;
 using PictureBox = AForge.Controls.PictureBox;
+using iSpy.Common.Video;
 
 namespace iSpyApplication.Controls
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace iSpyApplication.Video
+namespace iSpy.Common.Video
 {
     public delegate void AlertEventHandler(object sender, AlertEventArgs eventArgs);
 

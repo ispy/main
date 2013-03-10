@@ -1154,6 +1154,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\iSpy.Common\iSpy.Common.csproj">
+      <Project>{9F8A0E31-F2BD-4990-9DE8-16FB2CACD9AF}</Project>
+      <Name>iSpy.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Video.DirectShow\Video.DirectShow.csproj">
       <Project>{26CD2CE7-FF63-4669-83B0-7D9C8F3408EE}</Project>
       <Name>Video.DirectShow</Name>

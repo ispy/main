@@ -6,6 +6,7 @@ using System.Text;
 using iSpyApplication.Audio.codecs;
 using iSpyApplication.Audio.streams;
 using NAudio.Wave;
+using iSpy.Common.Audio;
 
 namespace iSpyApplication.Audio.talk
 {
