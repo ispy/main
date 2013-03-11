@@ -63,7 +63,7 @@ namespace AForge.Video.DirectShow
         /// 
         public int CompareTo( object value )
         {
-            var f = (FilterInfo) value;
+            FilterInfo f = (FilterInfo) value;
 
             if ( f == null )
                 return 1;
@@ -196,7 +196,7 @@ namespace AForge.Video.DirectShow
         private string GetName( IMoniker moniker )
         {
             Object bagObj = null;
-            IPropertyBag bag;
+            IPropertyBag bag = null;
 
             try
             {
@@ -212,7 +212,7 @@ namespace AForge.Video.DirectShow
                     Marshal.ThrowExceptionForHR( hr );
 
                 // get it as string
-                var ret = (string) val;
+                string ret = (string) val;
                 if ( string.IsNullOrEmpty(ret) )
                     throw new ApplicationException( );
 
@@ -239,7 +239,8 @@ namespace AForge.Video.DirectShow
         //
         private string GetName( string monikerString )
         {
-            IBindCtx bindCtx;
+            IBindCtx bindCtx = null;
+            IMoniker moniker = null;
             String name = "";
             int n = 0;
 
@@ -247,7 +248,6 @@ namespace AForge.Video.DirectShow
             if ( Win32.CreateBindCtx( 0, out bindCtx ) == 0 )
             {
                 // convert moniker`s string to a moniker
-                IMoniker moniker;
                 if ( Win32.MkParseDisplayName( bindCtx, monikerString, ref n, out moniker ) == 0 )
                 {
                     // get device name

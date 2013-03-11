@@ -210,6 +210,7 @@ namespace AForge.Video.DirectShow
                 VideoCapabilities caps = videoCapabilitiesDictionary[(string) videoResolutionsCombo.SelectedItem];
 
                 videoDevice.VideoResolution = caps;
+
                 captureSize = caps.FrameSize;
             }
 

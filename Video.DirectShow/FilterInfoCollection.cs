@@ -11,7 +11,7 @@ namespace AForge.Video.DirectShow
     using System.Collections;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
-    using Internals;
+    using AForge.Video.DirectShow.Internals;
 
     /// <summary>
     /// Collection of filters' information objects.
@@ -68,9 +68,10 @@ namespace AForge.Video.DirectShow
 		private void CollectFilters( Guid category )
 		{
 			object			comObj = null;
-			ICreateDevEnum	enumDev;
+			ICreateDevEnum	enumDev = null;
 			IEnumMoniker	enumMon = null;
-			var		devMon = new IMoniker[1];
+			IMoniker[]		devMon = new IMoniker[1];
+			int				hr;
 
 		    try
             {
@@ -84,7 +85,7 @@ namespace AForge.Video.DirectShow
                 enumDev = (ICreateDevEnum) comObj;
 
                 // Create an enumerator to find filters of specified category
-                int				hr = enumDev.CreateClassEnumerator( ref category, out enumMon, 0 );
+                hr = enumDev.CreateClassEnumerator( ref category, out enumMon, 0 );
                 if ( hr != 0 )
                     throw new ApplicationException( "No devices of the category" );
 
@@ -98,7 +99,7 @@ namespace AForge.Video.DirectShow
                         break;
 
                     // Add the filter
-                    var filter = new FilterInfo( devMon[0] );
+                    FilterInfo filter = new FilterInfo( devMon[0] );
                     InnerList.Add( filter );
 
                     // Release COM object

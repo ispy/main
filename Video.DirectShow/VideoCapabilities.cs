@@ -104,7 +104,7 @@ namespace AForge.Video.DirectShow
                 }
             }
 
-            var videocaps = new VideoCapabilities[videocapsList.Count];
+            VideoCapabilities[] videocaps = new VideoCapabilities[videocapsList.Count];
             videocapsList.Values.CopyTo( videocaps, 0 );
 
             return videocaps;
@@ -114,7 +114,7 @@ namespace AForge.Video.DirectShow
         internal VideoCapabilities( IAMStreamConfig videoStreamConfig, int index )
         {
             AMMediaType mediaType = null;
-            var caps = new VideoStreamConfigCaps( );
+            VideoStreamConfigCaps caps = new VideoStreamConfigCaps( );
 
             try
             {
