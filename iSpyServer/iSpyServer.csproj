@@ -55,6 +55,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -181,6 +183,15 @@
     </Reference>
     <Reference Include="CodeVendor.Controls">
       <HintPath>..\_lib\CodeVendor.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client">
+      <HintPath>..\packages\Google.GData.Client.1.9.0.0\lib\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions">
+      <HintPath>..\packages\Google.GData.Extensions.1.9.0.0\lib\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.YouTube">
+      <HintPath>..\packages\Google.GData.YouTube.1.9.0.0\lib\Google.GData.YouTube.dll</HintPath>
     </Reference>
     <Reference Include="Interop.NetFwTypeLib">
       <HintPath>..\_lib\Interop.NetFwTypeLib.dll</HintPath>
@@ -359,6 +370,7 @@
     <Content Include="lgpl-3.0.txt" />
     <Content Include="license.txt" />
     <Content Include="objects.xml" />
+    <None Include="packages.config" />
     <None Include="Resources\icon_pointer.png" />
     <Content Include="XML\objects.xml" />
     <Content Include="XML\PTZ.xml" />
@@ -607,4 +619,5 @@
     </PreBuildEvent>
     <PostBuildEvent>call "$(SolutionDir)signing\iSpyServer.bat"</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

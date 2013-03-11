@@ -197,17 +197,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_lib\LibVlcWrapper\Declarations.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.Client, Version=1.8.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\Google.GData.Client.dll</HintPath>
+    <Reference Include="Google.GData.Client, Version=1.9.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Client.1.9.0.0\lib\Google.GData.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.Extensions, Version=1.8.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\Google.GData.Extensions.dll</HintPath>
+    <Reference Include="Google.GData.Extensions, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Extensions.1.9.0.0\lib\Google.GData.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.YouTube, Version=1.8.0.0, Culture=neutral, PublicKeyToken=af04a32718ae8833, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\Google.GData.YouTube.dll</HintPath>
+    <Reference Include="Google.GData.YouTube, Version=1.9.0.0, Culture=neutral, PublicKeyToken=af04a32718ae8833, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.YouTube.1.9.0.0\lib\Google.GData.YouTube.dll</HintPath>
     </Reference>
     <Reference Include="Implementation, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -771,6 +768,7 @@
     <Content Include="postproc-51.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
     <None Include="Resources\phyxius.jpg" />
     <None Include="Resources\bigdipper.jpg" />
     <None Include="Resources\ALLNET.jpg" />
@@ -1147,7 +1145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\x86\" />
-    <Folder Include="..\_lib\" />
     <Folder Include="WebServerRoot\Media\Audio\" />
     <Folder Include="WebServerRoot\Media\Video\" />
   </ItemGroup>
