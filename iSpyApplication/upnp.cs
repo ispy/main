@@ -6,6 +6,8 @@ namespace iSpyApplication
 {
     public static class NATControl
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public static UPnPNAT NAT = new UPnPNAT();
         private static IStaticPortMappingCollection _mappings;
 
@@ -48,7 +50,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
                 try
                 {
@@ -57,7 +59,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
             }
 

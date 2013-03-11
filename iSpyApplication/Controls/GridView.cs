@@ -13,6 +13,8 @@ namespace iSpyApplication.Controls
     /// </summary>
     public sealed class GridView : PictureBox
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         #region Private
 
         internal MainForm _parent;
@@ -180,7 +182,7 @@ namespace iSpyApplication.Controls
             }
             catch(Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             Monitor.Exit(this);
             pline.Dispose();

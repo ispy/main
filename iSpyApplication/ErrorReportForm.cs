@@ -5,6 +5,8 @@ namespace iSpyApplication
 {
     public partial class ErrorReportingForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public Exception UnhandledException;
 
         public ErrorReportingForm()
@@ -30,7 +32,7 @@ namespace iSpyApplication
             catch (Exception)
             {
                 rep.Dispose();
-                //MainForm.LogExceptionToFile(ex);
+                //Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 MessageBox.Show(LocRm.GetString("SendErrorReportError"), LocRm.GetString("Error"));
                 return;
             }

@@ -10,6 +10,8 @@ namespace iSpyApplication.Audio.streams
 {
     class iSpyServerStream: IAudioSource
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private string _source;
         private float _volume;
         private bool _listening;
@@ -254,7 +256,7 @@ namespace iSpyApplication.Audio.streams
 
                 if (AudioSourceError!=null)
                     AudioSourceError(this, new AudioSourceErrorEventArgs(e.Message));
-                MainForm.LogExceptionToFile(e);
+                Log.Error("",e);//MainForm.LogExceptionToFile(e);
             }
             if (stream != null)
             {

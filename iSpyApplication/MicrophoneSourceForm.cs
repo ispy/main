@@ -10,6 +10,8 @@ namespace iSpyApplication
 {
     public partial class MicrophoneSourceForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private readonly string _noDevices = LocRm.GetString("NoAudioDevices");
         public objectsMicrophone Mic;
 
@@ -170,7 +172,7 @@ namespace iSpyApplication
             }
             catch (ApplicationException ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 ddlDevice.Items.Add(_noDevices);
                 ddlDevice.Enabled = false;
             }

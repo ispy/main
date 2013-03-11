@@ -11,6 +11,8 @@ namespace iSpyApplication
 {
     public partial class AddFloorPlanForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public FloorPlanControl Fpc;
         private List<objectsFloorplanObjectsEntry> _floorPlanEntries;
         private objectsFloorplanObjectsEntry _movingObject;
@@ -39,7 +41,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
             }
 

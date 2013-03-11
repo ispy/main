@@ -18,6 +18,8 @@ namespace iSpyApplication.Video
 {
     public class KinectStream : IVideoSource, IAudioSource
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private readonly Pen _inferredBonePen = new Pen(Brushes.Gray, 1);
         private readonly Pen _trackedBonePen = new Pen(Brushes.Green, 2);
         private readonly Brush _trackedJointBrush = new SolidBrush(Color.FromArgb(255, 68, 192, 68));
@@ -207,7 +209,7 @@ namespace iSpyApplication.Video
             }
             if (_sensor==null)
             {
-                MainForm.LogMessageToFile("Sensor not found: "+_uniqueKinectId);
+                Log.Warn("Sensor not found: "+_uniqueKinectId);
                 _isrunning = false;
                 return;
             }
@@ -271,7 +273,7 @@ namespace iSpyApplication.Video
             }
             catch (Exception ex)//IOException)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 _sensor = null;
                 _isrunning = false;
             }
@@ -626,7 +628,7 @@ namespace iSpyApplication.Video
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             return null;
         }

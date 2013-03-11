@@ -8,6 +8,8 @@ namespace iSpyApplication
 {
     public class AsynchronousFtpUpLoader
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public bool FTP(string server, bool passive, string username, string password, string filename, int counter, byte[] contents, out string error)
         {
             bool failed = false;
@@ -55,7 +57,7 @@ namespace iSpyApplication
                 var response = (FtpWebResponse)request.GetResponse();
                 if (response.StatusCode != FtpStatusCode.ClosingData)
                 {
-                    MainForm.LogErrorToFile("FTP Failed: "+response.StatusDescription);
+                    Log.Warn("FTP Failed: "+response.StatusDescription);
                     failed = true;
                 }
 
@@ -84,7 +86,7 @@ namespace iSpyApplication
 
             if (error!="")
             {
-                MainForm.LogErrorToFile(error);
+                Log.Warn(error);
             }
             
             objectsCamera oc = MainForm.Cameras.SingleOrDefault(p => p.id == task.CameraId);

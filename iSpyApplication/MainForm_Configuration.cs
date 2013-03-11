@@ -174,7 +174,7 @@ namespace iSpyApplication
                     }
                     catch (Exception ex)
                     {
-                        LogExceptionToFile(ex);
+                        Log.Error("", ex);
                     }
                     fs.Close();
                 }
@@ -206,7 +206,7 @@ namespace iSpyApplication
                             "Could not load or restore configuration - you will need to manually copy the file /program files/ispy/XML/config.xml to  /users/<username>/appdata/roaming/ispy/xml: " +
                             ex2.Message;
                         MessageBox.Show(m);
-                        LogMessageToFile(m);
+                        Log.Error(m, ex2);
                         throw;
                     }
                 }
@@ -400,7 +400,7 @@ namespace iSpyApplication
                 catch (Exception ex)
                 {
                     //unsupported on win xp
-                    LogExceptionToFile(ex);
+                    Log.Error("", ex);
                 }
                 _ipv6Addresses = ipv6Adds.ToArray();
                 return _ipv6Addresses;
@@ -718,7 +718,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                LogExceptionToFile(ex);
+                Log.Error("", ex);
                 MessageBox.Show(LocRm.GetString("ConfigurationChanged"), LocRm.GetString("Error"));
                 _cameras = new List<objectsCamera>();
                 _microphones = new List<objectsMicrophone>();
@@ -919,7 +919,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 //can fail for permissions reasons
-                LogExceptionToFile(ex);
+                Log.Error("", ex);
                 return;
             }
             long b = 0;
@@ -960,7 +960,7 @@ namespace iSpyApplication
                         }
                         catch (Exception ex)
                         {
-                            LogExceptionToFile(ex);
+                            Log.Error("", ex);
                         }
                     }
                 }
@@ -975,9 +975,10 @@ namespace iSpyApplication
                 UISync.Execute(RefreshControls);
             }
 
+            //check media storage limitations
             if ((b / 1048576) > Conf.MaxMediaFolderSizeMB)
             {
-                LogMessageToFile(LocRm.GetString("MediaStorageLimit").Replace("[AMOUNT]",
+                Log.Warn(LocRm.GetString("MediaStorageLimit").Replace("[AMOUNT]",
                                                                               Conf.
                                                                                   MaxMediaFolderSizeMB.
                                                                                   ToString(CultureInfo.InvariantCulture)));
@@ -2318,7 +2319,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    LogExceptionToFile(ex);
+                    Log.Error("", ex);
                 }
             }
 

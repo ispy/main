@@ -14,6 +14,8 @@ namespace iSpyApplication.Video
 {
     public class FFMPEGStream : IVideoSource, IAudioSource
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private int _framesReceived;
         private ManualResetEvent _stopEvent;
         private Thread _thread;
@@ -202,7 +204,7 @@ namespace iSpyApplication.Video
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             Program.WriterMutex.ReleaseMutex();
             if (vfr == null || !vfr.IsOpen)
@@ -241,10 +243,10 @@ namespace iSpyApplication.Video
                     DateTime start = DateTime.Now;
                     frame = vfr.ReadVideoFrame();
                     if ( frame == null )
-			        {
-				        reasonToStop = ReasonToFinishPlaying.EndOfStreamReached;
+                    {
+                        reasonToStop = ReasonToFinishPlaying.EndOfStreamReached;
                         break;
-			        }
+                    }
                     
                     if (NewFrame!=null)
                         NewFrame(this, new NewFrameEventArgs(frame));
@@ -289,7 +291,7 @@ namespace iSpyApplication.Video
             {
                 if (VideoSourceError != null)
                     VideoSourceError(this, new VideoSourceErrorEventArgs(e.Message));
-                MainForm.LogExceptionToFile(e);
+                Log.Error("",e);//MainForm.LogExceptionToFile(e);
                 reasonToStop = ReasonToFinishPlaying.DeviceLost;
             }
             if (PlayingFinished != null)

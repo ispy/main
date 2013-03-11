@@ -31,6 +31,8 @@ namespace iSpyApplication.Controls
     /// </summary>
     public sealed class CameraWindow : PictureBox
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         #region Private
         internal DateTime LastAutoTrackSent = DateTime.MinValue;
         private Color _customColor = Color.Black;
@@ -279,7 +281,7 @@ namespace iSpyApplication.Controls
                         }
                         catch (Exception ex)
                         {
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             failed = true;
                         }
                         fs.Close();
@@ -356,7 +358,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
         public void ScanForMissingFiles()
@@ -380,7 +382,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -1443,7 +1445,7 @@ namespace iSpyApplication.Controls
                                         }
                                         catch (Exception ex)
                                         {
-                                            MainForm.LogExceptionToFile(ex);
+                                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                                         }
                                         finally
                                         {
@@ -1490,7 +1492,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                Log.Error("Camera " + Camobject.id, ex);
             }
             _processing = false;
         }
@@ -1585,7 +1587,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             _lastFrameUploaded = DateTime.Now;
             if (g != null)
@@ -1658,7 +1660,7 @@ namespace iSpyApplication.Controls
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     Camobject.ftp.ready = true;
                 }
                 _lastFrameUploaded = DateTime.Now;
@@ -1732,7 +1734,7 @@ namespace iSpyApplication.Controls
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                    Log.Error("Camera " + Camobject.id, ex);
                     _timeLapseWriter = null;
                     Camobject.recorder.timelapse = 0;
                 }
@@ -1743,7 +1745,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                Log.Error("Camera " + Camobject.id, ex);
             }
             return success;
         }
@@ -1764,7 +1766,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             finally
             {
@@ -2125,7 +2127,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception e)
             {
-                MainForm.LogExceptionToFile(e, "Camera " + Camobject.id);
+                Log.Error("Camera " + Camobject.id, e);
             }
 
             
@@ -2184,7 +2186,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
 
             }
         }
@@ -2196,7 +2198,7 @@ namespace iSpyApplication.Controls
 
             if (MainForm.RecordingThreads >= MainForm.Conf.MaxRecordingThreads)
             {
-                MainForm.LogMessageToFile("Skipped recording - maximum recording thread limit hit. See settings to modify the limit.");
+                Log.Info("Skipped recording - maximum recording thread limit hit. See settings to modify the limit.");
                 return;
             }
             //Console.WriteLine("StartSaving");
@@ -2323,7 +2325,7 @@ namespace iSpyApplication.Controls
                         }
                         catch (Exception ex)
                         {
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                         }
                         
                     }
@@ -2380,7 +2382,7 @@ namespace iSpyApplication.Controls
                             }
                             catch (Exception ex)
                             {
-                                MainForm.LogExceptionToFile(ex);
+                                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             }
                             if (vc != null && vc.WriterBuffer != null)
                             {
@@ -2436,7 +2438,7 @@ namespace iSpyApplication.Controls
                 catch (Exception ex)
                 {
                     error = true;
-                    MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                    Log.Error("Camera " + Camobject.id, ex);
                 }
                 finally
                 {
@@ -2452,7 +2454,7 @@ namespace iSpyApplication.Controls
                         }
                         catch (Exception ex)
                         {
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                         }
                         finally
                         {
@@ -2538,7 +2540,7 @@ namespace iSpyApplication.Controls
                     if (yt)
                     {
                         if (CodecExtension!=".mp4")
-                            MainForm.LogMessageToFile("Skipped youtube upload (only upload mp4 files).");
+                            Log.Info("Skipped youtube upload (only upload mp4 files).");
                         else
                         {
                             try
@@ -2547,7 +2549,7 @@ namespace iSpyApplication.Controls
                             }
                             catch (Exception ex)
                             {
-                                MainForm.LogExceptionToFile(ex);
+                                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             }    
                         }
                     }
@@ -2556,7 +2558,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             MainForm.RecordingThreads--;
             Camobject.newrecordingcount++;
@@ -2714,7 +2716,7 @@ namespace iSpyApplication.Controls
                 }
                 catch (Exception e)
                 {
-                    MainForm.LogExceptionToFile(e);
+                    Log.Error("",e);//MainForm.LogExceptionToFile(e);
                 }
             }
 
@@ -2740,7 +2742,7 @@ namespace iSpyApplication.Controls
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
             }
 
@@ -2754,7 +2756,7 @@ namespace iSpyApplication.Controls
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
 
                 if ( Camobject.ftp.mode == 1)
@@ -2874,8 +2876,7 @@ namespace iSpyApplication.Controls
             if (!VideoSourceErrorState)
             {
                 VideoSourceErrorState = true;
-                MainForm.LogExceptionToFile(new Exception("VideoSourceError: " + eventArgs.Description),
-                                            "Camera " + Camobject.id);
+                Log.Error("Camera " + Camobject.id, new Exception("VideoSourceError: " + eventArgs.Description));
                 _reconnectTime = DateTime.Now;
                 if (_errorTime == DateTime.MinValue)
                     _errorTime = DateTime.Now;
@@ -2904,7 +2905,7 @@ namespace iSpyApplication.Controls
                     if (!VideoSourceErrorState)
                     {
                         VideoSourceErrorState = true;
-                        MainForm.LogExceptionToFile(new Exception("VideoSourceFinished: " + reason), "Camera " + Camobject.id);
+                        Log.Error("Camera " + Camobject.id, new Exception("VideoSourceFinished: " + reason));
                         _reconnectTime = DateTime.Now;
                         if (_errorTime == DateTime.MinValue)
                             _errorTime = DateTime.Now;
@@ -2971,7 +2972,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                        Log.Error("Camera " + Camobject.id, ex);
                     }
                     Camera.MotionDetector = null;
                 }
@@ -2996,7 +2997,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                        Log.Error("Camera " + Camobject.id, ex);
                     }
 
 
@@ -3585,7 +3586,7 @@ namespace iSpyApplication.Controls
                                 }
                                 catch (Exception e)
                                 {
-                                    MainForm.LogExceptionToFile(e);
+                                    Log.Error("",e);//MainForm.LogExceptionToFile(e);
                                 }
 
                             }
@@ -3616,7 +3617,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex);
+                        Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     }
                     finally
                     {

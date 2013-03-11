@@ -10,6 +10,8 @@ namespace iSpyApplication
 {
     internal static class YouTubeUploader
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private static readonly Queue<UserState> UploadFiles = new Queue<UserState>(40);
         private static Thread _uploader;
 
@@ -109,16 +111,16 @@ namespace iSpyApplication
             }
             catch (GDataRequestException ex1)
             {
-                MainForm.LogErrorToFile("YouTube Uploader: " + ex1.ResponseString+" ("+ex1.Message+")");
+                Log.Error("YouTube Uploader: " + ex1.ResponseString+" ("+ex1.Message+")");
                 if (ex1.ResponseString=="NoLinkedYouTubeAccount")
                 {
-                    MainForm.LogMessageToFile(
+                    Log.Warn(
                         "This is because the Google account you connected has not been linked to YouTube yet. The simplest way to fix it is to simply create a YouTube channel for that account: http://www.youtube.com/create_channel");
                 }
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             if (success)
             {
@@ -130,7 +132,7 @@ namespace iSpyApplication
                     msg += " (private)";
                 else
                     msg += " (public)";
-                MainForm.LogMessageToFile(msg);
+                Log.Info(msg);
 
                 if (us.EmailOnComplete != "" && us.Ispublic)
                 {

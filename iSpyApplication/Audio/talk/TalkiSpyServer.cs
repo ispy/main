@@ -10,6 +10,8 @@ namespace iSpyApplication.Audio.talk
 {
     internal class TalkiSpyServer: ITalkTarget
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private readonly object _obj = new object();
         private readonly int _port = 80;
         private readonly string _server;
@@ -38,7 +40,7 @@ namespace iSpyApplication.Audio.talk
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 if (TalkStopped != null)
                     TalkStopped(this, EventArgs.Empty);
             }
@@ -128,7 +130,7 @@ namespace iSpyApplication.Audio.talk
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 StopTalk();
             }
         }

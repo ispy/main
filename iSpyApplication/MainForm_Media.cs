@@ -90,7 +90,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                LogExceptionToFile(ex);
+                Log.Error("", ex);
             }
             flowPreview.Controls.Remove(pb);
             pb.Dispose();
@@ -154,7 +154,7 @@ namespace iSpyApplication
                     }
                     catch(Exception ex)
                     {
-                        LogExceptionToFile(ex);
+                        Log.Error("", ex);
                     }
                 }
                 var displayList =

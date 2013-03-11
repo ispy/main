@@ -12,6 +12,8 @@ namespace iSpyApplication.Controls
 {
     public sealed partial class FloorPlanControl : PictureBox
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         #region Public
 
         public bool NeedSizeUpdate;
@@ -485,7 +487,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
 
             if (_mouseMove > DateTime.Now.AddSeconds(-3) && MainForm.Conf.ShowOverlayControls)

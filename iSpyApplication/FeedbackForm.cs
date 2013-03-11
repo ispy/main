@@ -5,6 +5,8 @@ namespace iSpyApplication
 {
     public partial class FeedbackForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public FeedbackForm()
         {
             InitializeComponent();
@@ -40,7 +42,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 rep.Dispose();
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 MessageBox.Show(LocRm.GetString("Feedback_NotSent"), LocRm.GetString("Error"));
             }
             if (success)

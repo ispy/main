@@ -6,6 +6,8 @@ namespace iSpyApplication
 {
     public class McRemoteControlManager : NativeWindow
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public enum InputDevice
         {
             Key,
@@ -299,7 +301,7 @@ namespace iSpyApplication
                     (uint)Marshal.SizeOf(rid[0]))
                     )
                 {
-                    MainForm.LogMessageToFile("Failed to register raw input devices.");
+                    Log.Warn("Failed to register raw input devices.");
                 }
             }
 

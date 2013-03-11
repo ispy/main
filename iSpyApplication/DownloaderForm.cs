@@ -9,6 +9,8 @@ namespace iSpyApplication
 {
     public partial class DownloaderForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public string Url;
         public string SaveLocation;
         public string Format;
@@ -81,7 +83,7 @@ namespace iSpyApplication
                                 }
                                 catch (Exception ex)
                                 {
-                                    MainForm.LogExceptionToFile(ex);
+                                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                                     DialogResult = DialogResult.Cancel;
                                     Close();
                                     return;
@@ -91,19 +93,19 @@ namespace iSpyApplication
                         }
                         else
                         {
-                            MainForm.LogMessageToFile("Update cancelled");
+                            Log.Info("Update cancelled");
                         }
                     }
                     else
                     {
-                        MainForm.LogErrorToFile("Response stream from " + Url + " failed");
+                        Log.Warn("Response stream from " + Url + " failed");
                     }
                 }
                 response.Close();
             }
             else
             {
-                MainForm.LogErrorToFile("Response from "+Url+" failed");
+                Log.Warn("Response from "+Url+" failed");
             }
             
         }

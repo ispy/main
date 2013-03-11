@@ -10,6 +10,8 @@ namespace iSpyApplication.Audio.streams
 {
     class FfmpegStream: IAudioSource
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private string _source;
         private bool _listening;
         private float _volume;
@@ -191,7 +193,7 @@ namespace iSpyApplication.Audio.streams
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             Program.WriterMutex.ReleaseMutex();
             if (afr == null || !afr.IsOpen)
@@ -279,7 +281,7 @@ namespace iSpyApplication.Audio.streams
             {
                 if (AudioSourceError!=null)
                     AudioSourceError(this, new AudioSourceErrorEventArgs(e.Message));
-                MainForm.LogExceptionToFile(e);
+                Log.Error("",e);//MainForm.LogExceptionToFile(e);
             }
         }
 

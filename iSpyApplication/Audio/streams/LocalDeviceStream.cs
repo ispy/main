@@ -7,6 +7,8 @@ namespace iSpyApplication.Audio.streams
 {
     class LocalDeviceStream: IAudioSource
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private string _source;
         private volatile bool _isrunning;
         private float _volume;
@@ -236,7 +238,7 @@ namespace iSpyApplication.Audio.streams
                 try {_waveIn.StopRecording();}
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
                 _waveIn = null;
             }

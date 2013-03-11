@@ -10,6 +10,8 @@ namespace iSpyApplication
 {
     public class PTZController
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private readonly CameraWindow _cameraControl;
         private HttpWebRequest _request;
         const double Arc = Math.PI / 8;
@@ -294,7 +296,7 @@ namespace iSpyApplication
             }
             catch (Exception e)
             {
-                MainForm.LogExceptionToFile(e);
+                Log.Error("",e);//MainForm.LogExceptionToFile(e);
                 return;
             }
             if (!absURL)
@@ -478,7 +480,7 @@ namespace iSpyApplication
             }
             catch(Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             myRequestState.Response = null;
                 myRequestState.Request = null;

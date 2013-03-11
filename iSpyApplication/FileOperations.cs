@@ -6,6 +6,8 @@ namespace iSpyApplication
 {
     public static class FileOperations
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private const int FoDelete = 3;
         private const int FofAllowundo = 0x40;
         private const int FofNoconfirmation = 0x0010;
@@ -55,7 +57,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 return false;
             }
             return true;

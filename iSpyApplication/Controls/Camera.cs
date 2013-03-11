@@ -20,6 +20,8 @@ namespace iSpyApplication.Controls
     /// </summary>
     public class Camera
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public CameraWindow CW;
 
         public volatile bool LastFrameNull = true;
@@ -188,7 +190,7 @@ namespace iSpyApplication.Controls
                                 catch (Exception)
                                 {
                                     //config corrupted
-                                    MainForm.LogErrorToFile("Error configuring plugin - trying with a blank configuration");
+                                    Log.Warn("Error configuring plugin - trying with a blank configuration");//MainForm.LogErrorToFile("Error configuring plugin - trying with a blank configuration");
                                     CW.Camobject.alerts.pluginconfig = "";
                                     _plugin.GetType().GetProperty("Configuration").SetValue(_plugin,
                                                                                             CW.Camobject.alerts.
@@ -678,7 +680,7 @@ namespace iSpyApplication.Controls
                         {
                         }
                     }
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     err = true;
                 }
 
@@ -753,7 +755,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex);
+                        Log.Error("", ex);//Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     }
                 }
 

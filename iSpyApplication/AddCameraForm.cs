@@ -20,6 +20,8 @@ namespace iSpyApplication
 {
     public partial class AddCameraForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private readonly string[] _alertmodes = new[] {"movement", "nomovement", "objectcount"};
 
         private readonly object[] _detectortypes = new object[] { "Two Frames", "Custom Frame", "Background Modelling", "Two Frames (Color)", "Custom Frame (Color)", "Background Modelling (Color)", "None" };
@@ -1612,7 +1614,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     MessageBox.Show(ex.Message);
                 }
                 if (myThumbnail != null)

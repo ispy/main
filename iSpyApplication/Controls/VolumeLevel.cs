@@ -27,6 +27,8 @@ namespace iSpyApplication.Controls
 {
     public sealed partial class VolumeLevel : PictureBox
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         #region Private
 
         
@@ -211,7 +213,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
         public List<FilesFile> FileList
@@ -246,7 +248,7 @@ namespace iSpyApplication.Controls
                         }
                         catch (Exception ex)
                         {
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             failed = true;
                         }
                         fs.Close();
@@ -327,7 +329,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -965,7 +967,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             skip:
             _processing = false;
@@ -1257,7 +1259,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex);
+                        Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     }
                     finally
                     {
@@ -1361,7 +1363,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex);                       
+                        Log.Error("",ex);//MainForm.LogExceptionToFile(ex);                       
                     }
 
                     Program.WriterMutex.WaitOne();
@@ -1372,7 +1374,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex);
+                        Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     }
                     finally
                     {
@@ -1389,7 +1391,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             
             if (!String.IsNullOrEmpty(Micobject.recorder.trigger) && TopLevelControl != null)
@@ -1761,7 +1763,7 @@ namespace iSpyApplication.Controls
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -1776,8 +1778,7 @@ namespace iSpyApplication.Controls
             if (!AudioSourceErrorState)
             {
                 AudioSourceErrorState = true;
-                MainForm.LogExceptionToFile(new Exception("AudioSourceError: " + eventArgs.Description),
-                                            "Mic " + Micobject.id);
+                Log.Error("Mic " + Micobject.id, new Exception("AudioSourceError: " + eventArgs.Description));
                 _reconnectTime = DateTime.Now;
                 if (_errorTime == DateTime.MinValue)
                     _errorTime = DateTime.Now;
@@ -1799,7 +1800,7 @@ namespace iSpyApplication.Controls
                     if (!AudioSourceErrorState)
                     {
                         AudioSourceErrorState = true;
-                        MainForm.LogExceptionToFile(new Exception("AudioSourceFinished: " + reason), "Mic " + Micobject.id);
+                        Log.Error("Mic " + Micobject.id, new Exception("AudioSourceFinished: " + reason));
                         _reconnectTime = DateTime.Now;
                         if (_errorTime == DateTime.MinValue)
                             _errorTime = DateTime.Now;
@@ -1932,7 +1933,7 @@ namespace iSpyApplication.Controls
                 }
                 catch (Exception e)
                 {
-                    MainForm.LogExceptionToFile(e);
+                    Log.Error("",e);//MainForm.LogExceptionToFile(e);
                 }
             }
 

@@ -38,7 +38,7 @@ namespace iSpyApplication._Logging
 				case LogLevel.Error:
 					if (exception != null)
 					{
-						MainForm.LogExceptionToFile(exception, message.ToString());
+                        MainForm.LogExceptionToFile(message.ToString(), exception);
 					}
 					else
 					{

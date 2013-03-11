@@ -11,6 +11,8 @@ namespace iSpyApplication.Controls
 {
     class PreviewBox: AForge.Controls.PictureBox
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public bool Selected;
         public string FileName = "";
         public DateTime CreatedDate = DateTime.MinValue;
@@ -216,7 +218,7 @@ namespace iSpyApplication.Controls
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex);
+                        Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                         MessageBox.Show("Could not find a player for this file. Try using iSpyConnect or install VLC (x86) and use that instead ("+ex.Message+")");
                     }
                     break;

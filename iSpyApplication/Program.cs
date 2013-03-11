@@ -10,6 +10,8 @@ using Microsoft.Win32;
 
 internal static class Program
 {
+    private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
     //public static Mutex Mutex;
     private static string _apppath = "", _appdatapath = "";
     public static string AppPath
@@ -170,7 +172,7 @@ internal static class Program
         {
             try
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             } catch
             {
                 
@@ -179,7 +181,7 @@ internal static class Program
             {
                 try
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
                 catch
                 {
@@ -299,13 +301,13 @@ internal static class Program
                     }
                 }
             }
-            MainForm.LogExceptionToFile(e.Exception);
+            Log.Error("", e.Exception);
         }
         catch (Exception ex2)
         {
             try
             {
-                MainForm.LogExceptionToFile(ex2);
+                Log.Error("", ex2);
             }
             catch
             {

@@ -8,6 +8,8 @@ namespace iSpyApplication
 {
     public partial class WebservicesForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         public static string NL = Environment.NewLine;
         public string EmailAddress = "";
         public string MobileNumber = "";
@@ -94,7 +96,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
 
                 Next.Enabled = false;

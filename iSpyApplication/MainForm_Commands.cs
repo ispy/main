@@ -285,7 +285,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                LogExceptionToFile(ex);
+                Log.Error("", ex);
             }
 
         }

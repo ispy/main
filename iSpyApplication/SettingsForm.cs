@@ -20,6 +20,8 @@ namespace iSpyApplication
 {
     public partial class SettingsForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private const int Rgbmax = 255;
         public int InitialTab;
         public bool ReloadResources;
@@ -159,7 +161,7 @@ namespace iSpyApplication
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
             }
             else
@@ -172,7 +174,7 @@ namespace iSpyApplication
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 }
             }
 
@@ -315,7 +317,7 @@ namespace iSpyApplication
             }
             catch (ApplicationException ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 ddlTalkMic.Items.Add(_noDevices);
                 ddlTalkMic.Enabled = false;
             }

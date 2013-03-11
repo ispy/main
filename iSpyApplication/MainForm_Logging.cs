@@ -6,7 +6,7 @@ namespace iSpyApplication
 {
     public partial class MainForm
     {
-        internal static void LogExceptionToFile(Exception ex, string info)
+        internal static void LogExceptionToFile(string info, Exception ex)
         {
             ex.HelpLink = info + ": " + ex.Message;
             LogExceptionToFile(ex);

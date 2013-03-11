@@ -41,6 +41,8 @@ namespace iSpyApplication
 
     public class LocalServer
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private static readonly List<Socket> MySockets = new List<Socket>();
         private static List<String> _allowedIPs;
         //private static int _socketindex;
@@ -121,7 +123,7 @@ namespace iSpyApplication
             }
             catch (Exception e)
             {
-                MainForm.LogExceptionToFile(e);
+                Log.Error("",e);//MainForm.LogExceptionToFile(e);
                 if (_myListener != null)
                 {
                     try
@@ -137,7 +139,7 @@ namespace iSpyApplication
             }
             if (message != "")
             {
-                MainForm.LogMessageToFile(message);
+                Log.Info(message);
                 return message;
             }
             try 
@@ -156,7 +158,7 @@ namespace iSpyApplication
             catch (Exception e)
             {
                 message = e.Message;
-                MainForm.LogExceptionToFile(e);
+                Log.Error("",e);//MainForm.LogExceptionToFile(e);
             }
             return message;
         }
@@ -229,7 +231,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                MainForm.LogErrorToFile("No mime type for request " + sRequestedFile+" ("+ex.Message+")");
+                Log.Warn("No mime type for request " + sRequestedFile+" ("+ex.Message+")");
             }
 
 
@@ -362,13 +364,13 @@ namespace iSpyApplication
                         //Debug.WriteLine("Only sent " + sent + " of " + bSendData.Length);
                     }
                     if (sent == -1)
-                        MainForm.LogExceptionToFile(new Exception("Socket Error cannot Send Packet"));
+                        Log.Warn("Socket Error: didn't Send Packet");
                 }
             }
             catch (Exception e)
             {
                 //Debug.WriteLine("Send To Browser Error: " + e.Message);
-                MainForm.LogExceptionToFile(e);
+                Log.Error("",e);//MainForm.LogExceptionToFile(e);
             }
         }
 
@@ -558,7 +560,7 @@ namespace iSpyApplication
                         {
                             //Debug.WriteLine("Server Error (socket): " + ex.Message);
                             DisconnectSocket(mySocket);
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             NumErr++;
                         }
                     }
@@ -566,7 +568,7 @@ namespace iSpyApplication
                 catch (Exception ex)
                 {
                     //Debug.WriteLine("Server Error (generic): " + ex.Message);
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     NumErr++;
                 }
             }
@@ -1182,7 +1184,7 @@ namespace iSpyApplication
                         }
                         catch (Exception ex)
                         {
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             resp = "Command Failed: " + ex.Message + ",OK";
                         }
                     }
@@ -1219,7 +1221,7 @@ namespace iSpyApplication
                         }
                         catch (Exception e)
                         {
-                            MainForm.LogExceptionToFile(e);
+                            Log.Error("",e);//MainForm.LogExceptionToFile(e);
                         }
 
                     }
@@ -1231,7 +1233,7 @@ namespace iSpyApplication
                         }
                         catch (Exception e)
                         {
-                            MainForm.LogExceptionToFile(e);
+                            Log.Error("",e);//MainForm.LogExceptionToFile(e);
                         }
                     }
                     resp = "OK";
@@ -1269,7 +1271,7 @@ namespace iSpyApplication
                             }
                             catch (Exception ex)
                             {
-                                MainForm.LogExceptionToFile(ex);
+                                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             }
                         }
 
@@ -1287,7 +1289,7 @@ namespace iSpyApplication
                             }
                             catch (Exception ex)
                             {
-                                MainForm.LogExceptionToFile(ex);
+                                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             }
                         }
                         resp = "OK";
@@ -1459,7 +1461,7 @@ namespace iSpyApplication
                                     }
                                     catch (Exception ex)
                                     {
-                                        MainForm.LogErrorToFile(LocRm.GetString("Validate_Camera_PTZIPOnly") + ": " +
+                                        Log.Warn(LocRm.GetString("Validate_Camera_PTZIPOnly") + ": " +
                                                                 ex.Message);
                                     }
                                 }
@@ -1485,7 +1487,7 @@ namespace iSpyApplication
                 //    catch (Exception ex)
                 //    {
                 //        Debug.WriteLine("Server Error (livefeed): " + ex.Message);
-                //        MainForm.LogExceptionToFile(ex);
+                //        Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 //    }
 
                 //    resp = "OK";
@@ -2381,7 +2383,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                MainForm.LogErrorToFile("Failed to get path for request: "+sRequest+" ("+sMyWebServerRoot+") - "+ex.Message);
+                Log.Warn("Failed to get path for request: "+sRequest+" ("+sMyWebServerRoot+") - "+ex.Message);
                 sLocalDir = "";
                 sDirName = "";
             }
@@ -2619,7 +2621,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 //Debug.WriteLine("Server Error (livefeed): " + ex.Message);
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -2699,7 +2701,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 //Debug.WriteLine("Server Error (livefeed): " + ex.Message);
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -2778,7 +2780,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 //Debug.WriteLine("Server Error (livefeed): " + ex.Message);
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -2871,7 +2873,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 //Debug.WriteLine("Server Error (livefeed): " + ex.Message);
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -2919,7 +2921,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 Debug.WriteLine("Server Error (livefeed): " + ex.Message);
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -2988,7 +2990,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             DisconnectSocket(mySocket);
             
@@ -3102,7 +3104,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 Debug.WriteLine("Server Error (livefeed): " + ex.Message);
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 

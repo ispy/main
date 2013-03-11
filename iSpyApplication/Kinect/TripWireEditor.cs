@@ -9,6 +9,8 @@ namespace iSpyApplication.Kinect
 {
     public class TripWireEditor : Panel
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private Point _pointStart;
         private Point _pointEnd;
         private bool _bMouseDown;
@@ -322,7 +324,7 @@ namespace iSpyApplication.Kinect
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
 
         }

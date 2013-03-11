@@ -21,6 +21,8 @@ namespace iSpyApplication
 {
     public partial class VideoSourceForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private IVideoPlayer _player;
         public CameraWindow CameraControl;
         public string CameraLogin;
@@ -145,7 +147,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 devicesCombo.Items.Add(LocRm.GetString("NoCaptureDevices"));
                 devicesCombo.Enabled = false;
                 //okButton.Enabled = false;
@@ -275,7 +277,7 @@ namespace iSpyApplication
             catch(Exception)
             {
                 //Ximea DLL not installed
-                //MainForm.LogMessageToFile("This is not a XIMEA device");
+                //Log.Info("This is not a XIMEA device");
             }
 
             pnlXimea.Enabled = deviceCount>0;
@@ -337,7 +339,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 //Type error if not installed
-                MainForm.LogMessageToFile("Kinect supporting libraries not installed. ("+ex.Message+")" );
+                Log.Error("Kinect supporting libraries not installed.",ex);
             }
             if (deviceCount>0)
             {
@@ -968,7 +970,7 @@ namespace iSpyApplication
             }
             catch ( Exception ex )
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 MessageBox.Show( ex.Message, LocRm.GetString("Error"),
                     MessageBoxButtons.OK, MessageBoxIcon.Error );
             }

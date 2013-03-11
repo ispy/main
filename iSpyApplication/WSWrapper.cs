@@ -8,6 +8,8 @@ namespace iSpyApplication
 {
     public static class WsWrapper
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private static Timer _reconnect;
         private static iSpySecure _wsa;
         private static string _externalIP = "";
@@ -69,7 +71,7 @@ namespace iSpyApplication
                 _websitelive = value;
                 if (!_websitelive)
                 {
-                    MainForm.LogErrorToFile("Disconnected");
+                    Log.Warn("Disconnected");
                     if (!ReconnectTimer.Enabled)
                         ReconnectTimer.Start();
                 }
@@ -84,7 +86,7 @@ namespace iSpyApplication
                 if (s == "OK")
                 {
                     ReconnectTimer.Stop();
-                    MainForm.LogMessageToFile("Reconnecting...");
+                    Log.Info("Reconnecting...");
                     if (MainForm.Conf.ServicesEnabled)
                     {
                         try
@@ -96,11 +98,11 @@ namespace iSpyApplication
                                 ForceSync(MainForm.IPAddress, MainForm.Conf.LANPort, MainForm.MWS.GetObjectList());
                             }
                             WebsiteLive = true;
-                            MainForm.LogMessageToFile("Connected");
+                            Log.Info("Connected");
                         }
                         catch (Exception ex)
                         {
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                             ReconnectTimer.Start();
                         }
                     }
@@ -108,7 +110,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
         }
 
@@ -126,7 +128,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -149,7 +151,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -172,7 +174,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -195,7 +197,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -217,7 +219,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -241,7 +243,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -264,7 +266,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -284,11 +286,11 @@ namespace iSpyApplication
                 {
                     r = Wsa.SendTweet(MainForm.Conf.WSUsername, MainForm.Conf.WSPassword, message);
                     if (r!="OK")
-                        MainForm.LogMessageToFile(r);
+                        Log.Info(r);
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -311,7 +313,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -365,7 +367,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 _websitelive = false;
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
 
            
@@ -437,7 +439,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive)
@@ -472,7 +474,7 @@ namespace iSpyApplication
                 }
                 catch (Exception ex)
                 {
-                    MainForm.LogExceptionToFile(ex);
+                    Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                     WebsiteLive = false;
                 }
                 if (WebsiteLive && r != "OK")
@@ -499,7 +501,7 @@ namespace iSpyApplication
             catch (Exception ex)
             {
                 _websitelive = false;
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             if (_websitelive)
             {

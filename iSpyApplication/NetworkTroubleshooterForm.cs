@@ -11,6 +11,7 @@ namespace iSpyApplication
 
     public partial class NetworkTroubleshooterForm : Form
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
 
         private readonly string NL = Environment.NewLine;
 
@@ -67,7 +68,7 @@ namespace iSpyApplication
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             
             bool portMapOk = false;
@@ -250,7 +251,7 @@ namespace iSpyApplication
                         }
                         catch (Exception ex)
                         {
-                            MainForm.LogExceptionToFile(ex);
+                            Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                         }
                     }
                     

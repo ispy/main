@@ -12,6 +12,8 @@ namespace iSpyApplication.Audio.talk
 {
     internal class TalkFoscam: ITalkTarget
     {
+        private static readonly Common.Logging.ILog Log = Common.Logging.LogManager.GetCurrentClassLogger();
+
         private const string MoIPOprFlag = "MO_O";
         private const string MoIPAvFlag = "MO_V";
         private const int OprSpeakStartNotify = 0xb;
@@ -182,7 +184,7 @@ namespace iSpyApplication.Audio.talk
             }
             catch (Exception ex  )
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 return;
             }
             _stream = tcp.GetStream();
@@ -337,7 +339,7 @@ namespace iSpyApplication.Audio.talk
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
                 StopTalk(true);
             }
         }
@@ -398,7 +400,7 @@ namespace iSpyApplication.Audio.talk
                                             bConnected = true;
                                         else
                                         {
-                                            MainForm.LogErrorToFile("Login to foscam camera failed");
+                                            Log.Warn("Login to foscam camera failed");
                                             _stopEvent.Set();
                                             break;
                                         }
@@ -413,7 +415,7 @@ namespace iSpyApplication.Audio.talk
                                         int iDataLength = BitConverter.ToInt32(data, 15);
                                         if (iDataLength == 0)
                                         {
-                                            MainForm.LogErrorToFile("Foscam start speak request failed");
+                                            Log.Warn("Foscam start speak request failed");
                                             _stopEvent.Set();
                                             break;
                                         }
@@ -424,7 +426,7 @@ namespace iSpyApplication.Audio.talk
                                         int err = BitConverter.ToInt16(resp, 0);
                                         if (err != 0)
                                         {
-                                            MainForm.LogErrorToFile("Foscam AV Port request failed");
+                                            Log.Warn("Foscam AV Port request failed");
                                             _stopEvent.Set();
                                             break;
                                         }
@@ -453,7 +455,7 @@ namespace iSpyApplication.Audio.talk
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex);
+                Log.Error("",ex);//MainForm.LogExceptionToFile(ex);
             }
             if (TalkStopped != null)
                 TalkStopped(this, EventArgs.Empty);
