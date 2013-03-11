@@ -184,6 +184,9 @@
     <Reference Include="CodeVendor.Controls">
       <HintPath>..\Externals\CodeVendor.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Google.GData.Client">
       <HintPath>..\packages\Google.GData.Client.1.9.0.0\lib\Google.GData.Client.dll</HintPath>
     </Reference>
@@ -369,6 +372,7 @@
     <Compile Include="XML\objects.cs">
       <DependentUpon>objects.xsd</DependentUpon>
     </Compile>
+    <Compile Include="_Logging\iSpyMainFormLoggingFactory.cs" />
     <Content Include="Copyright.txt" />
     <Content Include="lgpl-3.0.txt" />
     <Content Include="license.txt" />
