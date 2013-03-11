@@ -161,41 +161,41 @@
   <ItemGroup>
     <Reference Include="AForge, Version=2.2.3.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Controls, Version=2.2.3.0, Culture=neutral, PublicKeyToken=a8ac264d1dc6b9d9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Controls.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.Controls.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Imaging, Version=2.2.3.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Imaging.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Imaging.Formats, Version=2.2.3.0, Culture=neutral, PublicKeyToken=8065ed5a639199a0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Imaging.Formats.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.Imaging.Formats.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Math, Version=2.2.3.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Math.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.Math.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video">
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Video.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.Video.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.Ximea, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5cdcd64958730f99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Video.Ximea.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.Video.Ximea.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Vision, Version=2.2.3.0, Culture=neutral, PublicKeyToken=b612fa915eefaa06, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Vision.dll</HintPath>
+      <HintPath>..\Externals\AForge.All_Libraries.2.2.3.0\AForge.Vision.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Declarations, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\LibVlcWrapper\Declarations.dll</HintPath>
+      <HintPath>..\Externals\LibVlcWrapper\Declarations.dll</HintPath>
     </Reference>
     <Reference Include="Google.GData.Client, Version=1.9.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.GData.Client.1.9.0.0\lib\Google.GData.Client.dll</HintPath>
@@ -208,15 +208,15 @@
     </Reference>
     <Reference Include="Implementation, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\LibVlcWrapper\Implementation.dll</HintPath>
+      <HintPath>..\Externals\LibVlcWrapper\Implementation.dll</HintPath>
     </Reference>
     <Reference Include="Interop.NetFwTypeLib">
-      <HintPath>..\_lib\Interop.NetFwTypeLib.dll</HintPath>
+      <HintPath>..\Externals\Interop.NetFwTypeLib.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="LibVlcWrapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\LibVlcWrapper\LibVlcWrapper.dll</HintPath>
+      <HintPath>..\Externals\LibVlcWrapper\LibVlcWrapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=1.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -225,13 +225,13 @@
     </Reference>
     <Reference Include="NAudio, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_lib\NAudio.dll</HintPath>
+      <HintPath>..\Externals\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="NSpeex">
-      <HintPath>..\_lib\NSpeex.dll</HintPath>
+      <HintPath>..\Externals\NSpeex.dll</HintPath>
     </Reference>
     <Reference Include="Renderers">
-      <HintPath>..\_lib\Renderers.dll</HintPath>
+      <HintPath>..\Externals\Renderers.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -257,10 +257,10 @@
       <Name>System.XML</Name>
     </Reference>
     <Reference Include="Windows7ToolStripRenderer">
-      <HintPath>..\_lib\Windows7ToolStripRenderer.dll</HintPath>
+      <HintPath>..\Externals\Windows7ToolStripRenderer.dll</HintPath>
     </Reference>
     <Reference Include="xiApi.NET">
-      <HintPath>..\_lib\xiApi.NET.dll</HintPath>
+      <HintPath>..\Externals\xiApi.NET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
