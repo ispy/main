@@ -392,7 +392,7 @@ namespace iSpyServer
             }
             catch (Exception ex)
             {
-                MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                MainForm.LogExceptionToFile("Camera " + Camobject.id, ex);
             }
             _processing = false;
         }
@@ -483,7 +483,7 @@ namespace iSpyServer
             }
             catch (Exception e)
             {
-                MainForm.LogExceptionToFile(e, "Camera " + Camobject.id);
+                MainForm.LogExceptionToFile("Camera " + Camobject.id, e);
             }
             borderPen.Dispose();
             grabBrush.Dispose();
@@ -594,8 +594,7 @@ namespace iSpyServer
             if (!VideoSourceErrorState)
             {
                 VideoSourceErrorState = true;
-                MainForm.LogExceptionToFile(new Exception("VideoSourceError: " + eventArgs.Description),
-                                            "Camera " + Camobject.id);
+                MainForm.LogExceptionToFile("Camera " + Camobject.id, new Exception("VideoSourceError: " + eventArgs.Description));
                 //Monitor.Enter(this);
                 _camera.LastFrameNull = true;
 
@@ -642,7 +641,7 @@ namespace iSpyServer
                     }
                     catch (Exception ex)
                     {
-                        MainForm.LogExceptionToFile(ex, "Camera " + Camobject.id);
+                        MainForm.LogExceptionToFile("Camera " + Camobject.id, ex);
                     }
                     _camera.VideoSource = null;
                 }

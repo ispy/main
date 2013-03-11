@@ -285,6 +285,9 @@
     <Compile Include="LayoutEditor.Designer.cs">
       <DependentUpon>LayoutEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForm_Logging.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MicrophoneSource.cs">
       <SubType>Form</SubType>
     </Compile>

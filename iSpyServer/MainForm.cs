@@ -25,7 +25,7 @@ namespace iSpyServer
     /// <summary>
     /// Summary description for MainForm
     /// </summary>
-    public class MainForm : Form
+    public partial class MainForm : Form
     {
         #region Delegates
 
@@ -1083,12 +1083,6 @@ namespace iSpyServer
             WriteLog();
         }
 
-        private void WriteLog()
-        {
-            string fc = LogTemplate.Replace("<!--CONTENT-->", LogFile.ToString());
-            File.WriteAllText(Program.AppPath + @"log_" + NextLog + ".htm", fc);
-        }
-
         private void RemoveObjects()
         {
             bool removed = true;
@@ -1664,61 +1658,6 @@ namespace iSpyServer
         private void ToolStripButton4Click(object sender, EventArgs e)
         {
             ShowSettings(0);
-        }
-
-        internal static void LogExceptionToFile(Exception ex, string info)
-        {
-            ex.HelpLink = info + ": " + ex.Message;
-            LogExceptionToFile(ex);
-        }
-
-        internal static void LogExceptionToFile(Exception ex)
-        {
-            if (!_logging)
-                return;
-            try
-            {
-                string em = ex.HelpLink + "<br/>" + ex.Message + "<br/>" + ex.Source + "<br/>" + ex.StackTrace +
-                             "<br/>" + ex.InnerException + "<br/>" + ex.Data;
-                LogFile.Append("<tr><td style=\"color:red\" valign=\"top\">Exception</td><td valign=\"top\">" +
-                               DateTime.Now.ToLongTimeString() + "</td><td valign=\"top\">" + em + "</td></tr>");
-            }
-            catch
-            {
-                //do nothing
-            }
-        }
-
-        internal static void LogMessageToFile(String message)
-        {
-            if (!_logging)
-                return;
-
-            try
-            {
-                LogFile.Append("<tr><td style=\"color:green\" valign=\"top\">Message</td><td valign=\"top\">" +
-                               DateTime.Now.ToLongTimeString() + "</td><td valign=\"top\">" + message + "</td></tr>");
-            }
-            catch
-            {
-                //do nothing
-            }
-        }
-
-        internal static void LogErrorToFile(String message)
-        {
-            if (!_logging)
-                return;
-
-            try
-            {
-                LogFile.Append("<tr><td style=\"color:red\" valign=\"top\">Error</td><td valign=\"top\">" +
-                               DateTime.Now.ToLongTimeString() + "</td><td valign=\"top\">" + message + "</td></tr>");
-            }
-            catch
-            {
-                //do nothing
-            }
         }
 
         public static void GoSubscribe()
