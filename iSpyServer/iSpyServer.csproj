@@ -158,32 +158,32 @@
   <ItemGroup>
     <Reference Include="AForge, Version=2.2.3.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSpyApplication\DLLS\AForge.dll</HintPath>
+      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Controls, Version=2.2.3.0, Culture=neutral, PublicKeyToken=a8ac264d1dc6b9d9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSpyApplication\DLLS\AForge.Controls.dll</HintPath>
+      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Controls.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Imaging, Version=2.2.3.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSpyApplication\DLLS\AForge.Imaging.dll</HintPath>
+      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Imaging.Formats, Version=2.2.3.0, Culture=neutral, PublicKeyToken=8065ed5a639199a0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSpyApplication\DLLS\AForge.Imaging.Formats.dll</HintPath>
+      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Imaging.Formats.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Math, Version=2.2.3.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSpyApplication\DLLS\AForge.Math.dll</HintPath>
+      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Math.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video">
-      <HintPath>..\iSpyApplication\DLLS\AForge.Video.dll</HintPath>
+      <HintPath>..\_lib\AForge.All_Libraries.2.2.3.0\AForge.Video.dll</HintPath>
     </Reference>
     <Reference Include="CodeVendor.Controls">
-      <HintPath>..\iSpyApplication\DLLS\CodeVendor.Controls.dll</HintPath>
+      <HintPath>..\_lib\CodeVendor.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Interop.NetFwTypeLib">
-      <HintPath>..\iSpyApplication\DLLS\Interop.NetFwTypeLib.dll</HintPath>
+      <HintPath>..\_lib\Interop.NetFwTypeLib.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -193,10 +193,10 @@
     </Reference>
     <Reference Include="NAudio, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSpyApplication\DLLS\NAudio.dll</HintPath>
+      <HintPath>..\_lib\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="Renderers">
-      <HintPath>..\iSpyApplication\DLLS\Renderers.dll</HintPath>
+      <HintPath>..\_lib\Renderers.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
