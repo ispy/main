@@ -73,7 +73,7 @@ namespace AForge.Video.DirectShow
 			IMoniker[]		devMon = new IMoniker[1];
 			int				hr;
 
-		    try
+            try
             {
                 // Get the system device enumerator
                 Type srvType = Type.GetTypeFromCLSID( Clsid.SystemDeviceEnum );

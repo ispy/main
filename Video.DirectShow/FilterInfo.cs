@@ -10,7 +10,7 @@ namespace AForge.Video.DirectShow
     using System;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
-    using Internals;
+    using AForge.Video.DirectShow.Internals;
 
     /// <summary>
     /// DirectShow filter information.
