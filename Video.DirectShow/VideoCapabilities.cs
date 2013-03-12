@@ -13,7 +13,8 @@ namespace AForge.Video.DirectShow
     using System.Drawing;
     using System.Runtime.InteropServices;
 
-    using Internals;
+    using AForge.Video;
+    using AForge.Video.DirectShow.Internals;
 
     /// <summary>
     /// Capabilities of video device such as frame size and frame rate.
@@ -76,13 +77,13 @@ namespace AForge.Video.DirectShow
                 throw new NotSupportedException( "Unable to retrieve video device capabilities. This video device requires a larger VideoStreamConfigCaps structure." );
 
             // group capabilities with similar parameters
-            var videocapsList = new Dictionary<uint, VideoCapabilities>( );
+            Dictionary<uint, VideoCapabilities> videocapsList = new Dictionary<uint, VideoCapabilities>( );
 
             for ( int i = 0; i < count; i++ )
             {
                 try
                 {
-                    var vc = new VideoCapabilities( videoStreamConfig, i );
+                    VideoCapabilities vc = new VideoCapabilities( videoStreamConfig, i );
 
                     uint key = ( ( (uint) vc.FrameSize.Height ) << 32 ) |
                                ( ( (uint) vc.FrameSize.Width ) << 16 );
@@ -126,7 +127,7 @@ namespace AForge.Video.DirectShow
 
                 if ( mediaType.FormatType == FormatType.VideoInfo )
                 {
-                    var videoInfo = (VideoInfoHeader) Marshal.PtrToStructure( mediaType.FormatPtr, typeof( VideoInfoHeader ) );
+                    VideoInfoHeader videoInfo = (VideoInfoHeader) Marshal.PtrToStructure( mediaType.FormatPtr, typeof( VideoInfoHeader ) );
 
                     FrameSize = new Size( videoInfo.BmiHeader.Width, videoInfo.BmiHeader.Height );
                     BitCount = videoInfo.BmiHeader.BitCount;
@@ -135,7 +136,7 @@ namespace AForge.Video.DirectShow
                 }
                 else if ( mediaType.FormatType == FormatType.VideoInfo2 )
                 {
-                    var videoInfo = (VideoInfoHeader2) Marshal.PtrToStructure( mediaType.FormatPtr, typeof( VideoInfoHeader2 ) );
+                    VideoInfoHeader2 videoInfo = (VideoInfoHeader2) Marshal.PtrToStructure( mediaType.FormatPtr, typeof( VideoInfoHeader2 ) );
 
                     FrameSize = new Size( videoInfo.BmiHeader.Width, videoInfo.BmiHeader.Height );
                     BitCount = videoInfo.BmiHeader.BitCount;

@@ -788,7 +788,7 @@ namespace AForge.Video.DirectShow
                     }
                 }
 
-                return (isCrossbarAvailable.HasValue) && isCrossbarAvailable.Value;
+                return ( !isCrossbarAvailable.HasValue ) ? false : isCrossbarAvailable.Value;
             }
         }
 
