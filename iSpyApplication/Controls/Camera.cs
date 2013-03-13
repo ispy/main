@@ -158,10 +158,14 @@ namespace iSpyApplication.Controls
             }
             set
             {
-                if (_plugin != null)
+                lock (this)
                 {
-                    try {_plugin.GetType().GetMethod("Dispose").Invoke(_plugin, null);} catch {}
+                    //dispose of the original plugin
+                    if (_plugin != null)
+                        _plugin.Dispose();
+                    _plugin = null;
                 }
+
                 _plugin = value;
             }
         }
