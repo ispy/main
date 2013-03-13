@@ -45,10 +45,11 @@ public:
 	libffmpeg::AVFrame*				VideoFrame;
 	struct libffmpeg::SwsContext*	ConvertContext;
 
+	libffmpeg::AVPacket* Packet;
+
 	libffmpeg::AVCodecContext*		AudioCodecContext;
 	libffmpeg::AVStream*			AudioStream;
 	libffmpeg::int16_t*				Buffer;
-	
 	
 	int BytesRemaining;
 
@@ -62,7 +63,9 @@ public:
 
 		AudioStream       = NULL;
 		AudioCodecContext = NULL;
-
+		
+		Packet  = NULL;
+		
 		BytesRemaining = 0;
 	}
 };
@@ -91,11 +94,9 @@ static int interrupt_cb(void *ctx)
 
 static libffmpeg::AVFormatContext* open_file( char* fileName )
 {
-	libffmpeg::AVFormatContext* formatContext = libffmpeg::avformat_alloc_context( );
-	formatContext->interrupt_callback.callback = interrupt_cb;
-	formatContext->interrupt_callback.opaque = formatContext;
+	libffmpeg::AVFormatContext* formatContext;
 
-	if ( libffmpeg::avformat_open_input( &formatContext, fileName, NULL, NULL ) !=0 )
+	if ( libffmpeg::av_open_input_file( &formatContext, fileName, NULL, 0, NULL ) !=0 )
 	{
 		return NULL;
 	}
@@ -112,10 +113,15 @@ void VideoFileReader::Open( String^ fileName )
 	Close( );
 
 	data = gcnew ReaderPrivateData( );
+	data->Packet = new libffmpeg::AVPacket( );
+	data->Packet->data = NULL;
 	bool success = false;
 
-	IntPtr ptr = Marshal::StringToHGlobalAnsi( fileName );
-	char* nativeFileName = reinterpret_cast<char*>( static_cast<void*>( ptr ) );
+	IntPtr ptr = System::Runtime::InteropServices::Marshal::StringToHGlobalUni( fileName );
+    wchar_t* nativeFileNameUnicode = (wchar_t*) ptr.ToPointer( );
+    int utf8StringSize = WideCharToMultiByte( CP_UTF8, 0, nativeFileNameUnicode, -1, NULL, 0, NULL, NULL );
+    char* nativeFileName = new char[utf8StringSize];
+    WideCharToMultiByte( CP_UTF8, 0, nativeFileNameUnicode, -1, nativeFileName, utf8StringSize, NULL, NULL );
 
 	try
 	{
@@ -157,8 +163,6 @@ void VideoFileReader::Open( String^ fileName )
 		{
 			throw gcnew VideoException( "Cannot find codec to decode the video stream." );
 		}
-
-		
 
 		// open the codec
 		if ( libffmpeg::avcodec_open( data->CodecContext, codec ) < 0 )
@@ -234,6 +238,7 @@ void VideoFileReader::Open( String^ fileName )
 	finally
 	{
 		System::Runtime::InteropServices::Marshal::FreeHGlobal( ptr );
+        delete [] nativeFileName;
 
 		if ( !success )
 		{
@@ -251,7 +256,6 @@ void VideoFileReader::Close(  )
 		{
 			libffmpeg::av_free( data->Buffer );
 		}
-
 		if ( data->AudioCodecContext != NULL )
 		{
 			libffmpeg::avcodec_close( data->AudioCodecContext );
@@ -276,6 +280,12 @@ void VideoFileReader::Close(  )
 		{
 			libffmpeg::sws_freeContext( data->ConvertContext );
 		}
+
+		if ( data->Packet->data != NULL )
+		{
+			libffmpeg::av_free_packet( data->Packet );
+		}
+
 		data = nullptr;
 	}
 }
@@ -299,55 +309,97 @@ Bitmap^ VideoFileReader::ReadVideoFrame(  )
 	int bytesDecoded;
 	bool exit = false;
 
-	libffmpeg::AVPacket packet;
-	libffmpeg::av_init_packet(&packet);
-   int i = 0;
-   while(true)
-   {
-	  if (libffmpeg::av_read_frame(data->FormatContext, &packet) >= 0)	{
-		  if(packet.stream_index == data->VideoStream->index)
-		  {
+	while ( true )
+	{
+		// work on the current packet until we have decoded all of it
+		while ( data->BytesRemaining > 0 )
+		{
+			// decode the next chunk of data
+			bytesDecoded = libffmpeg::avcodec_decode_video2( data->CodecContext, data->VideoFrame, &frameFinished, data->Packet );
 
-			 //decode video frame
-			 libffmpeg::avcodec_decode_video2(data->CodecContext, data->VideoFrame, &frameFinished, &packet);
+			// was there an error?
+			if ( bytesDecoded < 0 )
+			{
+				throw gcnew VideoException( "Error while decoding frame." );
+			}
 
-			 //did we get a video frame?
-			 if(frameFinished)
-			 {
-				bitmap = gcnew Bitmap( data->CodecContext->width, data->CodecContext->height, PixelFormat::Format24bppRgb );
+			data->BytesRemaining -= bytesDecoded;
+					 
+			// did we finish the current frame? Then we can return
+			if ( frameFinished )
+			{
+				return DecodeVideoFrame( );
+			}
+		}
+
+		// read the next packet, skipping all packets that aren't
+		// for this stream
+		do
+		{
+			// free old packet if any
+			if ( data->Packet->data != NULL )
+			{
+				libffmpeg::av_free_packet( data->Packet );
+				data->Packet->data = NULL;
+			}
+
+			// read new packet
+			if ( libffmpeg::av_read_frame( data->FormatContext, data->Packet ) < 0)
+			{
+				exit = true;
+				break;
+			}
+		}
+		while ( data->Packet->stream_index != data->VideoStream->index );
+
+		// exit ?
+		if ( exit )
+			break;
+
+		data->BytesRemaining = data->Packet->size;
+	}
+
+	// decode the rest of the last frame
+	bytesDecoded = libffmpeg::avcodec_decode_video2(
+		data->CodecContext, data->VideoFrame, &frameFinished, data->Packet );
+
+	// free last packet
+	if ( data->Packet->data != NULL )
+	{
+		libffmpeg::av_free_packet( data->Packet );
+		data->Packet->data = NULL;
+	}
+
+	// is there a frame
+	if ( frameFinished )
+	{
+		bitmap = DecodeVideoFrame( );
+	}
+
+	return bitmap;
+}
+
+// Decodes video frame into managed Bitmap
+Bitmap^ VideoFileReader::DecodeVideoFrame( )
+{
+	Bitmap^ bitmap = gcnew Bitmap( data->CodecContext->width, data->CodecContext->height, PixelFormat::Format24bppRgb );
 	
-				// lock the bitmap
-				BitmapData^ bitmapData = bitmap->LockBits( System::Drawing::Rectangle( 0, 0, data->CodecContext->width, data->CodecContext->height ), ImageLockMode::ReadOnly, PixelFormat::Format24bppRgb );
+	// lock the bitmap
+	BitmapData^ bitmapData = bitmap->LockBits( System::Drawing::Rectangle( 0, 0, data->CodecContext->width, data->CodecContext->height ),
+		ImageLockMode::ReadOnly, PixelFormat::Format24bppRgb );
 
-				libffmpeg::uint8_t* ptr = reinterpret_cast<libffmpeg::uint8_t*>( static_cast<void*>( bitmapData->Scan0 ) );
+	libffmpeg::uint8_t* ptr = reinterpret_cast<libffmpeg::uint8_t*>( static_cast<void*>( bitmapData->Scan0 ) );
 
-				libffmpeg::uint8_t* srcData[4] = { ptr, NULL, NULL, NULL };
-				int srcLinesize[4] = { bitmapData->Stride, 0, 0, 0 };
+	libffmpeg::uint8_t* srcData[4] = { ptr, NULL, NULL, NULL };
+	int srcLinesize[4] = { bitmapData->Stride, 0, 0, 0 };
 
-				// convert video frame to the RGB bitmap
-				libffmpeg::sws_scale( data->ConvertContext, data->VideoFrame->data, data->VideoFrame->linesize, 0,	data->CodecContext->height, srcData, srcLinesize );
+	// convert video frame to the RGB bitmap
+	libffmpeg::sws_scale( data->ConvertContext, data->VideoFrame->data, data->VideoFrame->linesize, 0,
+		data->CodecContext->height, srcData, srcLinesize );
 
-				bitmap->UnlockBits( bitmapData );
+	bitmap->UnlockBits( bitmapData );
 
-			 }
-
-			 libffmpeg::av_free_packet(&packet);
-			 if(frameFinished)
-			 {
-				 break;
-			 }
-		  }
-		  else
-			  libffmpeg::av_free_packet(&packet);
-	  }
-	  else
-	  {
-		  av_free_packet(&packet);  
-		  break;
-	  }
-   }	
-   
-   return bitmap;
+	return bitmap;
 }
 
 // Read next audio frame of the current audio file
@@ -411,5 +463,4 @@ array<unsigned char>^ VideoFileReader::ReadAudioFrame(  )
 	Array::Resize(managedBuf, s);	
 	return managedBuf;
 }
-
 } } }

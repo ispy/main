@@ -288,6 +288,8 @@ namespace AForge { namespace Video { namespace FFMPEG
 		int m_sampleRate, m_channels,m_bitsPerSample;
 
 	private:
+		Bitmap^ DecodeVideoFrame( );
+
 		// Checks if video file was opened
 		void CheckIfVideoFileIsOpen( )
 		{

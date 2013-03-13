@@ -41,15 +41,14 @@ namespace AForge { namespace Video { namespace FFMPEG
 static void write_video_frame( WriterPrivateData^ data );
 static void open_video( WriterPrivateData^ data );
 static void open_audio( WriterPrivateData^ data );
-static void add_video_stream( WriterPrivateData^ data, int width, int height, bool crf, int bitRate,
-							  enum libffmpeg::CodecID codec_id, enum libffmpeg::PixelFormat pixelFormat, int framerate );
+static void add_video_stream( WriterPrivateData^ data, int width, int height, int frameRate, int bitRate,
+							  enum libffmpeg::CodecID codec_id, enum libffmpeg::PixelFormat pixelFormat );
 static void add_audio_stream( WriterPrivateData^ data, enum libffmpeg::CodecID codec_id);
 
 // A structure to encapsulate all FFMPEG related private variable
 ref struct WriterPrivateData
 {
 public:
-	
 	libffmpeg::AVFormatContext*		FormatContext;
 	libffmpeg::AVStream*			VideoStream;
 	libffmpeg::AVStream*			AudioStream;
@@ -113,31 +112,26 @@ VideoFileWriter::VideoFileWriter( void ) :
 
 void VideoFileWriter::Open( String^ fileName, int width, int height)
 {
-	Open( fileName, width, height, true, VideoCodec::Default );
+	Open( fileName, width, height, 25 );
 }
 
-void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, VideoCodec codec )
+void VideoFileWriter::Open( String^ fileName, int width, int height, int frameRate )
 {
-	Open( fileName, width, height, crf, codec,  1600000, 0 );
+	Open( fileName, width, height, frameRate, VideoCodec::Default );
 }
 
-void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, VideoCodec codec, int bitRate, int framerate )
+void VideoFileWriter::Open( String^ fileName, int width, int height, int frameRate, VideoCodec codec )
 {
-	Open( fileName, width, height, crf, codec,  bitRate, AudioCodec::None, framerate,0,0,0 );
-}
-
-char* ManagedStringToUnmanagedUTF8Char(String^ str)
-{
-    pin_ptr<const wchar_t> wch = PtrToStringChars(str);
-    int nBytes = ::WideCharToMultiByte(CP_UTF8, NULL, wch, -1, NULL, 0, NULL, NULL);
-    char* lpszBuffer = new char[nBytes];
-    ZeroMemory(lpszBuffer, (nBytes) * sizeof(char)); 
-    nBytes = ::WideCharToMultiByte(CP_UTF8, NULL, wch, -1, lpszBuffer, nBytes, NULL, NULL);
-    return lpszBuffer;
+	Open( fileName, width, height, frameRate, codec, 400000 );
 }
 
 // Creates a video file with the specified name and properties
-void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, VideoCodec codec, int bitRate, AudioCodec audioCodec, int framerate, int bitrate, int samplerate, int channels)
+void VideoFileWriter::Open( String^ fileName, int width, int height, int frameRate, VideoCodec codec, int bitRate )
+{
+	Open( fileName, width, height, frameRate, codec, bitRate, AudioCodec::None, 0, 0 );
+}
+
+void VideoFileWriter::Open( String^ fileName, int width, int height, int frameRate, VideoCodec codec, int bitRate, AudioCodec audioCodec, int samplerate, int channels)
 {
     CheckIfDisposed( );
 
@@ -150,13 +144,11 @@ void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, V
 	// check width and height
 	if ( ( ( width & 1 ) != 0 ) || ( ( height & 1 ) != 0 ) )
 	{
-		Console::WriteLine("Video file resolution must be a multiple of two." );
 		throw gcnew ArgumentException( "Video file resolution must be a multiple of two." );
 	}
 		// check video codec
 	if ( ( (int) codec < -1 ) || ( (int) codec >= CODECS_COUNT ) )
 	{
-		Console::WriteLine("Invalid video codec is specified." );
 		throw gcnew ArgumentException( "Invalid video codec is specified." );
 	}
 
@@ -164,16 +156,15 @@ void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, V
 	m_height = height;
 	m_codec  = codec;
 	m_audiocodec = audioCodec;
+	m_frameRate = frameRate;
 	m_bitRate = bitRate;
 	
 	// convert specified managed String to unmanaged string
-	//array<Byte>^ encodedBytes = System::Text::Encoding::UTF8->GetBytes(fileName);
-
-	//int size = Marshal::SizeOf(encodedBytes[0]) * encodedBytes->Length;
-	//IntPtr pnt = Marshal::AllocHGlobal(size);
-	//Marshal::Copy(encodedBytes, 0, pnt, encodedBytes->Length);
-
-	char *nativeFileName= ManagedStringToUnmanagedUTF8Char(fileName);
+	IntPtr ptr = System::Runtime::InteropServices::Marshal::StringToHGlobalUni( fileName );
+    wchar_t* nativeFileNameUnicode = (wchar_t*) ptr.ToPointer( );
+    int utf8StringSize = WideCharToMultiByte( CP_UTF8, 0, nativeFileNameUnicode, -1, NULL, 0, NULL, NULL );
+    char* nativeFileName = new char[utf8StringSize];
+    WideCharToMultiByte( CP_UTF8, 0, nativeFileNameUnicode, -1, nativeFileName, utf8StringSize, NULL, NULL );
 
 	try
 	{
@@ -187,7 +178,6 @@ void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, V
 
 			if ( !outputFormat )
 			{
-				Console::WriteLine("Cannot find suitable output format." );
 				throw gcnew VideoException( "Cannot find suitable output format." );
 			}
 		}
@@ -197,29 +187,26 @@ void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, V
 
 		if ( !data->FormatContext )
 		{
-			Console::WriteLine("Cannot allocate format context." );
 			throw gcnew VideoException( "Cannot allocate format context." );
 		}
 		data->FormatContext->oformat = outputFormat;
 
 		// add video stream using the specified video codec
 
-		add_video_stream( data, width, height, crf, bitRate,
+		add_video_stream( data, width, height, frameRate, bitRate,
 			( codec == VideoCodec::Default ) ? outputFormat->video_codec : (libffmpeg::CodecID) video_codecs[(int) codec],
-			( codec == VideoCodec::Default ) ? libffmpeg::PIX_FMT_YUV420P : (libffmpeg::PixelFormat) pixel_formats[(int) codec], framerate );
+			( codec == VideoCodec::Default ) ? libffmpeg::PIX_FMT_YUV420P : (libffmpeg::PixelFormat) pixel_formats[(int) codec] );
 
 		if (audioCodec!=AudioCodec::None)	{
 			data->SampleRate=samplerate;
 			data->BitRate = bitrate;
 			data->Channels = channels;
 			add_audio_stream(data,  (libffmpeg::CodecID) audio_codecs[(int)audioCodec]);
-
 		}
 
 		// set the output parameters (must be done even if no parameters)
 		if ( libffmpeg::av_set_parameters( data->FormatContext, NULL ) < 0 )
 		{
-			Console::WriteLine("Failed configuring format context." );
 			throw gcnew VideoException( "Failed configuring format context." );
 		}
 
@@ -233,7 +220,6 @@ void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, V
 		{
 			if ( libffmpeg::avio_open( &data->FormatContext->pb, nativeFileName, AVIO_FLAG_WRITE ) < 0 )
 			{
-				Console::WriteLine("Cannot open the video file." );
 				throw gcnew System::IO::IOException( "Cannot open the video file." );
 			}
 		}
@@ -244,8 +230,9 @@ void VideoFileWriter::Open( String^ fileName, int width, int height, bool crf, V
 	}
 	finally
 	{
-		
-		delete nativeFileName;
+		System::Runtime::InteropServices::Marshal::FreeHGlobal( ptr );
+        delete [] nativeFileName;
+
 		if ( !success )
 		{
 			Close( );
@@ -260,11 +247,6 @@ void VideoFileWriter::Close( )
 	{
 		if ( data->FormatContext )
 		{
-			if ( data->VideoOutputBuffer )
-			{
-				Flush();
-				libffmpeg::av_free( data->VideoOutputBuffer );
-			}
 			if ( data->FormatContext->pb != NULL )
 			{
 				libffmpeg::av_write_trailer( data->FormatContext );
@@ -297,6 +279,11 @@ void VideoFileWriter::Close( )
 				libffmpeg::av_free( data->VideoFrame );
 			}
 
+			if ( data->VideoOutputBuffer )
+			{
+				Flush();
+				libffmpeg::av_free( data->VideoOutputBuffer );
+			}
 			for ( unsigned int i = 0; i < data->FormatContext->nb_streams; i++ )
 			{
 				libffmpeg::av_freep( &data->FormatContext->streams[i]->codec );
@@ -512,7 +499,7 @@ void write_video_frame( WriterPrivateData^ data )
 {
 	libffmpeg::AVCodecContext* codecContext = data->VideoStream->codec;
 	int out_size, ret = 0;
-	libffmpeg::AVPacket packet;
+
 	if ( data->FormatContext->oformat->flags & AVFMT_RAWPICTURE )
 	{
 		Console::WriteLine( "raw picture must be written" );
@@ -521,12 +508,13 @@ void write_video_frame( WriterPrivateData^ data )
 	{
 		// encode the image
 
-		out_size = libffmpeg::avcodec_encode_video( codecContext, data->VideoOutputBuffer, data->VideoOutputBufferSize, data->VideoFrame );
+		out_size = libffmpeg::avcodec_encode_video( codecContext, data->VideoOutputBuffer,
+			data->VideoOutputBufferSize, data->VideoFrame );
 
 		// if zero size, it means the image was buffered
 		if ( out_size > 0 )
 		{
-			
+			libffmpeg::AVPacket packet;
 			libffmpeg::av_init_packet( &packet );
 
 			if ( codecContext->coded_frame->pts != AV_NOPTS_VALUE )
@@ -548,7 +536,6 @@ void write_video_frame( WriterPrivateData^ data )
 			ret = libffmpeg::av_interleaved_write_frame( data->FormatContext, &packet );
 
 			libffmpeg::av_free_packet(&packet);
-			//ret = libffmpeg::av_write_frame( data->FormatContext, &packet );
 		}
 		else
 		{
@@ -558,7 +545,7 @@ void write_video_frame( WriterPrivateData^ data )
 
 	if ( ret != 0 )
 	{
-		throw gcnew VideoException( "Error while writing video frame ("+ret+")" );
+		throw gcnew VideoException( "Error while writing video frame." );
 	}
 }
 
@@ -571,8 +558,6 @@ static libffmpeg::AVFrame* alloc_picture( enum libffmpeg::PixelFormat pix_fmt, i
 	int size;
 
 	picture = libffmpeg::avcodec_alloc_frame( );
-	//picture->pts = libffmpeg::video_pts;
-
 	if ( !picture )
 	{
 		return NULL;
@@ -593,8 +578,8 @@ static libffmpeg::AVFrame* alloc_picture( enum libffmpeg::PixelFormat pix_fmt, i
 
 
 // Create new video stream and configure it
-void add_video_stream( WriterPrivateData^ data,  int width, int height, bool crf, int bitRate,
-					  enum libffmpeg::CodecID codecId, enum libffmpeg::PixelFormat pixelFormat, int framerate )
+void add_video_stream( WriterPrivateData^ data,  int width, int height, int frameRate, int bitRate,
+					  enum libffmpeg::CodecID codecId, enum libffmpeg::PixelFormat pixelFormat )
 {
 	libffmpeg::AVCodec *codec = libffmpeg::avcodec_find_encoder(codecId);
 	libffmpeg::AVCodecContext* codecContex;
@@ -619,18 +604,17 @@ void add_video_stream( WriterPrivateData^ data,  int width, int height, bool crf
 	// of which frame timestamps are represented. for fixed-fps content,
 	// timebase should be 1/framerate and timestamp increments should be
 	// identically 1.
-
+	codecContex->time_base.den = frameRate;
 	codecContex->time_base.num = 1;
-	codecContex->time_base.den = 1000;
 
-	if (framerate>0)	{ //avi - fixed fps
-			codecContex->time_base.den = framerate;
-			//codecContex->crfen = framerate;
+	codecContex->gop_size = 12; // emit one intra frame every twelve frames at most
+	
+	if (frameRate>0)	{ //avi - fixed fps
+
 			data->IsConstantFramerate = true;
 	}
 	
 
-	//codecContex->gop_size = 12; // emit one intra frame every twelve frames at most
 	codecContex->pix_fmt  = pixelFormat;
 
 	if ( codecContex->codec_id == libffmpeg::CODEC_ID_MPEG1VIDEO )
@@ -688,8 +672,6 @@ void add_video_stream( WriterPrivateData^ data,  int width, int height, bool crf
         codecContex->level=13;
 		codecContex->refs = 1;
 		codecContex->directpred = 1;
-		if (crf)
-			codecContex->crf = 20.0f; //quality is set by bitrate				
 	}
 
 	// some formats want stream headers to be separate
@@ -697,28 +679,22 @@ void add_video_stream( WriterPrivateData^ data,  int width, int height, bool crf
 	{
 		codecContex->flags |= CODEC_FLAG_GLOBAL_HEADER;
 	}
-
-
-	
 }
 
 // Open video codec and prepare out buffer and picture
 void open_video( WriterPrivateData^ data )
 {
 	libffmpeg::AVCodecContext* codecContext = data->VideoStream->codec;
-	libffmpeg::AVCodec* codec = libffmpeg::avcodec_find_encoder( codecContext->codec_id );
+	libffmpeg::AVCodec* codec = avcodec_find_encoder( codecContext->codec_id );
 
 	if ( !codec )
 	{
-		Console::WriteLine("Cannot find video codec." );
 		throw gcnew VideoException( "Cannot find video codec." );
 	}
 
 	// open the codec 
-	int i = libffmpeg::avcodec_open( codecContext, codec );
-	if ( i < 0 )
+	if ( avcodec_open( codecContext, codec ) < 0 )
 	{
-		Console::WriteLine("Cannot open video codec. ("+i+")" );
 		throw gcnew VideoException( "Cannot open video codec." );
 	}
 
@@ -735,7 +711,6 @@ void open_video( WriterPrivateData^ data )
 
 	if ( !data->VideoFrame )
 	{
-		Console::WriteLine("Cannot allocate video picture." );
 		throw gcnew VideoException( "Cannot allocate video picture." );
 	}
 
@@ -750,7 +725,6 @@ void open_video( WriterPrivateData^ data )
 
 	if ( ( data->ConvertContext == NULL ) || ( data->ConvertContextGrayscale == NULL ) )
 	{
-		Console::WriteLine("Cannot initialize frames conversion context." );
 		throw gcnew VideoException( "Cannot initialize frames conversion context." );
 	}
 }
