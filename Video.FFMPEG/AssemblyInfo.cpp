@@ -31,16 +31,11 @@ using namespace System::Security::Permissions;
 // You can specify all the value or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 
-[assembly:AssemblyVersionAttribute("2.6.5.0")];
-[assembly:AssemblyFileVersionAttribute("2.6.5.0")]
+[assembly:AssemblyVersionAttribute("2.2.4.0")];
+[assembly:AssemblyFileVersionAttribute("2.2.4.0")]
 
 [assembly:ComVisible(false)];
 
 [assembly:CLSCompliantAttribute(true)];
 
 [assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];
-
-[assembly:AssemblyKeyFile("AForge.Video.FFMPEG.snk")];
-[assembly:AssemblyDelaySign(true)];
-
-
