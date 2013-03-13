@@ -245,6 +245,10 @@
       <Name>System.Drawing</Name>
     </Reference>
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IO.Abstractions, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Externals\SystemIOAbstractions.1.4.1.0\System.IO.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Speech" />
@@ -330,6 +334,8 @@
     <Compile Include="ConfigureTimestampForm.Designer.cs">
       <DependentUpon>ConfigureTimestampForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EarlyPlugin.cs" />
+    <Compile Include="Controls\EarlyPluginAppDomainManager.cs" />
     <Compile Include="Kinect\ConfigureTripWires.cs">
       <SubType>Form</SubType>
     </Compile>

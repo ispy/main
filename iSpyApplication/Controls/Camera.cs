@@ -129,76 +129,28 @@ namespace iSpyApplication.Controls
             }
         }
 
-        private object _plugin;
-        public object Plugin
+        private iSpy.Common.Plugins.EarlyPlugin _plugin;
+        public iSpy.Common.Plugins.EarlyPlugin Plugin
         {
             get
             {
                 if (_plugin == null)
                 {
-                    foreach (string p in MainForm.Plugins)
+                    lock (this)
                     {
-                        if (p.EndsWith("\\" + CW.Camobject.alerts.mode + ".dll", StringComparison.CurrentCultureIgnoreCase))
+                        if (_plugin == null)
                         {
-                            Assembly ass = Assembly.LoadFrom(p);
-                            Plugin = ass.CreateInstance("Plugins.Main", true);
-                            if (_plugin != null)
+                            foreach (string p in MainForm.Plugins)
                             {
-                                try
+                                if (p.EndsWith("\\" + CW.Camobject.alerts.mode + ".dll", StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     try
                                     {
-                                        _plugin.GetType().GetProperty("VideoSource").SetValue(_plugin, CW.Camobject.settings.videosourcestring, null);
+                                        _plugin = iSpy.Common.Plugins.EarlyPluginFactory.Default.CreatePlugin(p, CW.Camobject);
                                     }
                                     catch { }
-
-                                    _plugin.GetType().GetProperty("Configuration").SetValue(_plugin,CW.Camobject.alerts.pluginconfig,null);
-                                    try
-                                    {
-                                        //used for plugins that store their configuration elsewhere
-                                        _plugin.GetType().GetMethod("LoadConfiguration").Invoke(_plugin, null);
-                                    }
-                                    catch { }
-                                    
-                                    try
-                                    {
-                                        //used for network kinect setting syncing
-                                        string dl = "";
-                                        foreach(var oc in MainForm.Cameras)
-                                        {
-                                            string s = oc.settings.namevaluesettings;
-                                            if (!String.IsNullOrEmpty(s))
-                                            {
-                                                if (s.ToLower().IndexOf("kinect", StringComparison.Ordinal)!=-1)
-                                                {
-                                                    dl += oc.name.Replace("*","").Replace("|","") + "|" + oc.id + "|" + oc.settings.videosourcestring + "*";
-                                                }
-                                            }
-                                        }
-                                        if (dl!="")
-                                            _plugin.GetType().GetProperty("DeviceList").SetValue(_plugin, dl, null);
-                                    }
-                                    catch { }
-                                    
-                                    
-                                    try
-                                    {
-                                        _plugin.GetType().GetProperty("CameraName").SetValue(_plugin, CW.Camobject.name, null);
-                                    }
-                                    catch { }
-                                }
-                                catch (Exception)
-                                {
-                                    //config corrupted
-                                    Log.Warn("Error configuring plugin - trying with a blank configuration");//MainForm.LogErrorToFile("Error configuring plugin - trying with a blank configuration");
-                                    CW.Camobject.alerts.pluginconfig = "";
-                                    _plugin.GetType().GetProperty("Configuration").SetValue(_plugin,
-                                                                                            CW.Camobject.alerts.
-                                                                                                pluginconfig,
-                                                                                            null);
                                 }
                             }
-                            break;
                         }
                     }
                 }
@@ -539,9 +491,9 @@ namespace iSpyApplication.Controls
                             {
                                 bmOrig =
                                     (Bitmap)
-                                    Plugin.GetType().GetMethod("ProcessFrame").Invoke(Plugin, new object[] {bmOrig});
-                                var pluginAlert = (String) Plugin.GetType().GetField("Alert").GetValue(Plugin);
-                                if (pluginAlert != "")
+                                    Plugin.ProcessFrame(bmOrig);
+                                var pluginAlert = Plugin.Alert;
+                                if (string.IsNullOrEmpty(pluginAlert)==false)
                                     Alarm(pluginAlert, EventArgs.Empty);
                             }
                         }

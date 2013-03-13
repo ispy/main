@@ -307,11 +307,11 @@ namespace iSpyApplication
                 object ins = null;
                 try
                 {
-                    ins = plugin.CreateInstance("Plugins.Main", true);
+                    ins = plugin.CreateInstance("Plugins.Main");
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    Log.Warn(string.Format("Unable to load plugin from assembly '{0}'.", dll.FullName), ex);
                 }
                 if (ins != null)
                 {
