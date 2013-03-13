@@ -44,7 +44,7 @@ namespace iSpy.Common.Plugins
             if (fileSystem == null) throw new ArgumentNullException("fileSystem");
             this.FileSystem = fileSystem;
 
-            _appdomainManager = new EarlyPluginAppDomainManager(fileSystem);
+            _appdomainManager = new EarlyPluginAppDomainManager(this.FileSystem);
         }
 
         readonly EarlyPluginAppDomainManager _appdomainManager;
@@ -153,8 +153,20 @@ namespace iSpy.Common.Plugins
 
         protected virtual EarlyPlugin BuildEarlyPluginInstance(object instance)
         {
+            //get the reflection wrapper class that has the reflection pointers to various operations
             Type instanceType = instance.GetType();
+            EarlyPluginReflectionWrapper wrapper = GetReflectionWrapper(instanceType);
 
+            //build the instance of the plugin
+            EarlyPlugin earlyPlugin = new EarlyPlugin(instance, wrapper);
+
+            return earlyPlugin;
+        }
+
+        protected virtual EarlyPluginReflectionWrapper GetReflectionWrapper(Type instanceType)
+        {
+            //another implementation could simply use a hash on the type to grab the reflection. 
+            //the real slow down is in invoking reflected operations though.
             EarlyPluginReflectionWrapper wrapper = new EarlyPluginReflectionWrapper();
             wrapper._VideoSourceProperty = instanceType.GetProperty("VideoSource");
             wrapper._ConfigurationProperty = instanceType.GetProperty("Configuration");
@@ -164,9 +176,7 @@ namespace iSpy.Common.Plugins
             wrapper._ProcessFrameMethod = instanceType.GetMethod("ProcessFrame");
             wrapper._AlertField = instanceType.GetField("Alert");
 
-            EarlyPlugin earlyPlugin = new EarlyPlugin(instance, wrapper);
-
-            return earlyPlugin;
+            return wrapper;
         }
 
 
