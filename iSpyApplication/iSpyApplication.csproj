@@ -334,8 +334,11 @@
     <Compile Include="ConfigureTimestampForm.Designer.cs">
       <DependentUpon>ConfigureTimestampForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EarlyPlugin.cs" />
-    <Compile Include="Controls\EarlyPluginAppDomainManager.cs" />
+    <Compile Include="_Common\EarlyPluginFactory.cs" />
+    <Compile Include="_Common\EarlyPlugin.cs" />
+    <Compile Include="_Common\EarlyPluginAppDomainManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Kinect\ConfigureTripWires.cs">
       <SubType>Form</SubType>
     </Compile>
