@@ -3108,9 +3108,6 @@
   <Manufacturer name="gotMe">
     <url version="Other" confirmed="false" prefix="http://" Source="FFMPEG" url="videostream.asf?user=[USERNAME]&amp;pwd=[PASSWORD]&amp;resolution=64&amp;rate=0" AudioModel="" port="" flags="" cookies="" />
   </Manufacturer>
-  <Manufacturer name="grafeio">
-    <url version="bionics" confirmed="false" prefix="http://" Source="FFMPEG" url="videostream.asf?user=[USERNAME]&amp;pwd=[PASSWORD]&amp;resolution=[WIDTH]*[HEIGHT]" AudioModel="" port="" flags="" cookies="" />
-  </Manufacturer>
   <Manufacturer name="Grand">
     <url version="Other" confirmed="false" prefix="rtsp://" Source="FFMPEG" url="[CHANNEL]" AudioModel="" port="554" flags="" cookies="" />
     <url version="wiifi" confirmed="false" prefix="http://" Source="JPEG" url="still.jpg" AudioModel="" port="" flags="" cookies="" />
